@@ -68,7 +68,7 @@ Back-end development, server-side development olaraq da tanınır və istifadə�
 
 Front-end development, client-side development olaraq da tanınır və istifadəçilərin birbaşa qarşılıqlı əlaqə qurduğu veb saytın və ya tətbiqin hissəsini yaratmaqdan ibarətdir. Bu, istifadəçinin vizual olaraq təcrübə etdiyi və qarşılıqlı əlaqə qurduğu hər şeyi əhatə edir.
 
-### Front-end Development-in əsas komponentləri:
+### Front-end Development-in Əsas Komponentləri:
 
 1. **HTML (HyperText Markup Language)**: Veb səhifələrin strukturu, başlıqlar, paraqraflar, şəkillər və bağlantılar kimi elementlərin tərtib edilməsi.
 2. **CSS (Cascading Style Sheets)**: Veb səhifələrin dizaynı, düzülüş, rənglər, şriftlər və responsive-lik daxil olmaqla stilin müəyyənləşdirilməsi.
@@ -80,7 +80,7 @@ Front-end development, client-side development olaraq da tanınır və istifadə
 
 ![frontend-1](https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/rddWsb0t8rXd9nlaMG7DoQ/Frontend-1.png)
 
-### Front-end Developer-in məsuliyyətləri:
+### Front-end Developer-in Məsuliyyətləri:
 
 1. **İstifadəçi Təcrübəsinin Təmin Edilməsi**:
    - **Təcrübənin Dizaynı**: İstifadəçi interfeysi və dizayn prinsipləri əsasında istifadəçi dostu və estetik cəhətdən xoş bir təcrübə yaratmaq.
@@ -164,7 +164,7 @@ Node.js server yaratmaq üçün paketlər təqdim etsə də, Express framework-�
 
 --------------------------------------------------------
 
-# Node.js-in Full-stack Development-də Üstünlükləri
+## Node.js-in Full-stack Development-də Üstünlükləri
 
 1. **Birləşdirilmiş Dili**: Node.js-in istifadə edilməsi, inkişaf etdiricilərə həm müştəri tərəfində, həm də server tərəfində JavaScript-dən istifadə etməyə imkan tanıyır. Bu, fərqli dillər arasında keçid etmə ehtiyacını azaldır və inkişaf prosesini daha uyğun və səlis edir.
 
@@ -181,3 +181,79 @@ Node.js server yaratmaq üçün paketlər təqdim etsə də, Express framework-�
 7. **Mikroservislərlə Uyğunluq**: Node.js mikroservis memarlığı ilə yaxşı uyğun gəlir, burada xidmətlər kiçik, fokuslanmış və miqyaslana biləndir.
 
 8. **Paketsiz İmkanlar**: NPM qeydiyyatı geniş seçimi olan paketlər təqdim edir, inkişaf imkanlarını artırır və tətbiqlərin yaradılma prosesini sürətləndirir.
+
+---------------------------------------------------------------------
+
+## Node.js-də Import və Require
+
+Node.js-də modullar, tətbiqin müxtəlif hissələrində təkrar istifadə edilə bilən funksionallığın özündə saxlayan, müstəqil bölmələrdir. Bu modullar fərdi fayllar və ya çoxsaylı fayl və qovluqlardan ibarət kolleksiyalar ola bilər. Modulyar yanaşma mürəkkəb kodun idarə edilə bilən hissələrə bölünməsinə və kodun təkrar istifadəsinin təşviq edilməsinə kömək edir.
+
+Modulun daxilindəki kodu xarici tətbiqdə istifadə etmək üçün inkişaf etdiricilər `require()` və ya `import()` ifadələrindən istifadə edirlər. Bu iki üsul arasındakı seçim istifadə olunan modul spesifikasiyasından asılıdır. Node.js əsasən iki modul spesifikasiyasını dəstəkləyir: CommonJS və ES modulları.
+
+#### Modul Spesifikasiyaları
+
+1. **CommonJS**:
+   - **Node.js-də Default**: Node.js, JavaScript kodunu standart olaraq CommonJS modulları kimi qəbul edir.
+   - **Sintaksis**: Modulları import etmək üçün `require()` istifadə edir.
+   - **Export**: Funksionallığı export etmək üçün `module.exports` istifadə edir.
+
+2. **ES Modulları**:
+   - **Node.js-də Aktivləşdirmək**: ES modullarını `.mjs` fayl uzantısından istifadə etməklə aktivləşdirmək mümkündür.
+   - **Sintaksis**: Modulları gətirmək üçün `import` və funksionallığı əlçatan etmək üçün `export` istifadə edir.
+   
+#### `require` və `import` Arasındakı Əsas Fərqlər
+
+1. **Kodda Yerləşmə (Placement in Code)**:
+   - **require**: Faylın hər hansı bir yerində, o cümlədən funksiyalar və şərtli ifadələr daxilində çağırıla bilər.
+   - **import**: Faylın əvvəlində çağırılmalı və şərtli olaraq yüklənə bilməz.
+
+2. **Bağlama (Binding)**:
+   - **require**: Dinamik olaraq bağlanır, yəni modul həlli icra vaxtında baş verir. Funksiyaların təriflərinə əlaqələndirilməsindəki səhvlər yalnız kod icra olunduqda aşkar edilə bilər.
+   - **import**: Statik olaraq bağlanır, səhvlərin tərtib vaxtında aşkar olunmasına imkan verir, bu da daha yaxşı səhv yoxlamasını təmin edir.
+
+3. **Sinxron və Asinxron (Synchronous vs. Asynchronous)**:
+   - **require**: Sinxron, modulları xətti, bloklaşdırıcı şəkildə yükləyir və işləyir.
+   - **import**: Asinxron, modulların paralel olaraq yüklənməsinə imkan verir, bu da iri miqyaslı tətbiqlərdə performansı artırır.
+
+#### Nümunə Kod
+
+**CommonJS Nümunəsi**:
+
+*CommonJS ilə Export*:
+```javascript
+// message.js
+module.exports = "Hello programmers";
+```
+
+*CommonJS ilə Import*:
+```javascript
+// main.js
+let msg = require('./message.js');
+console.log(msg); // Nəticə: Hello programmers
+```
+
+**ES Modulları Nümunəsi**:
+
+*ES Modulları ilə Export*:
+```javascript
+// module.mjs
+const a = 1;
+export { a as myValue };
+```
+
+*ES Modulları ilə Import*:
+```javascript
+// main.mjs
+import { myValue } from './module.mjs';
+console.log(myValue); // Nəticə: 1
+```
+
+### Nəticə
+
+- **Modullar**: Node.js-də özündə kodu saxlayan və təkrar istifadəni və idarə olunmasını təşviq edən müstəqil bölmələrdir.
+- **Spesifikasiyalar**: CommonJS və ES modulları, fərqli import/export sintaksisi ilə.
+- **require vs. import**:
+  - `require`: Dinamik, sinxron, hər yerdə istifadə edilə bilər.
+  - `import`: Statik, asinxron, faylın əvvəlində istifadə edilməlidir.
+  
+Bu iki import metodunun fərqlərini və müvafiq istifadə hallarını başa düşmək, Node.js tətbiqlərində daha səmərəli və səhvsiz kod yazmağa kömək edir.
