@@ -511,3 +511,128 @@ Kodunuzu modullara bölərək və layihənizi idarə etmək üçün `package.jso
 
 -----------------------------------------------------------------------
 
+## Node.js Modullarına Giriş
+
+Node.js-də modullar, tətbiqləri effektiv şəkildə qurmaq və saxlamaq üçün təkrar istifadə edilə bilən kod parçalarıdır. Modullar üç növə bölünə bilər: əsas, yerli və üçüncü tərəf. 
+
+#### Node.js Modullarının Növləri
+
+1. **Əsas Modullar**:
+   - **Tərif**: Node.js runtime-a daxil olan və əlavə kitabxanalara ehtiyac duymadan əsas funksionallıqları təmin edən modullar.
+   - **Nümunələr**: `http`, `fs`, `os`, `path`, `util`, `url`, `querystring`.
+
+2. **Yerli Modullar**:
+   - **Tərif**: Sizin və ya inkişaf komandası tərəfindən tətbiqinizin bir hissəsi olaraq yaradılan xüsusi modullar.
+   - **Nümunə**: Tarixlə bağlı funksionallıqları təmin edən `today.js` adlı bir modul.
+
+3. **Üçüncü Tərəf Modulları**:
+   - **Tərif**: Node.js icması tərəfindən yaradılan və onlayn mövcud olan modullar (məsələn, npm vasitəsilə).
+   - **Nümunələr**: `express`, `axios`, `async`.
+
+#### Əsas Modullar
+
+Əsas modullar Node.js tətbiqləri üçün vacib funksionallıqları təmin edir. Burada bəzi mühüm nümunələr və kod nümunələri var:
+
+1. **HTTP Modulu**:
+   - **Məqsəd**: HTTP üzərindən məlumatları ötürmək.
+   - **İstifadə**:
+
+     ```javascript
+     const http = require('http');
+     http.createServer((req, res) => {
+         res.write('Serverdən salam');
+         res.end();
+     }).listen(6000);
+     ```
+
+2. **FS (Fayl Sistemi) Modulu**:
+   - **Məqsəd**: Fayl sistemi ilə qarşılıqlı əlaqə qurmaq.
+   - **İstifadə (Asinxron oxuma)**:
+
+     ```javascript
+     const fs = require('fs');
+     fs.readFile('sample.txt', 'utf8', (err, data) => {
+         if (err) {
+             console.error(err);
+             return;
+         }
+         console.log(data);
+     });
+     ```
+
+   - **İstifadə (Sinxron oxuma)**:
+
+     ```javascript
+     const fs = require('fs');
+     const data = fs.readFileSync('content.md', 'utf8');
+     console.log(data);
+     ```
+
+3. **OS Modulu**:
+   - **Məqsəd**: Əməliyyat sistemi ilə qarşılıqlı əlaqə qurmaq.
+   - **İstifadə**:
+
+     ```javascript
+     const os = require('os');
+     console.log("Platforma: " + os.platform());
+     console.log("Arxitektura: " + os.arch());
+     ```
+
+4. **Path Modulu**:
+   - **Məqsəd**: Kataloq və fayl yolları ilə işləmək.
+   - **İstifadə**:
+
+     ```javascript
+     const path = require('path');
+     const result = path.basename('/content/index/home.html');
+     console.log(result); // Çıxış: home.html
+     ```
+
+5. **Util Modulu**:
+   - **Məqsəd**: Düzgünlüyü yoxlamaq və yardımçı funksiyalar üçün.
+   - **İstifadə**:
+
+     ```javascript
+     const util = require('util');
+     const str = 'Döngə %d dəfə icra olundu.';
+     for (let i = 1; i <= 10; i++) {
+         console.log(util.format(str, i));
+     }
+     ```
+
+6. **URL Modulu**:
+   - **Məqsəd**: URL-ləri pars etmək.
+   - **İstifadə**:
+
+     ```javascript
+     const url = require('url');
+     const webAddress = 'http://localhost:2000/index.html?lastName=Kent&firstName=Clark';
+     const qry = url.parse(webAddress, true);
+     const qrydata = qry.query;
+     console.log(qrydata.firstName); // Çıxış: Clark
+     ```
+
+7. **QueryString Modulu**:
+   - **Məqsəd**: URL-in sorğu sətirlərini pars etmək.
+   - **İstifadə**:
+
+     ```javascript
+     const querystring = require('querystring');
+     const qryParams = querystring.parse('lastName=Kent&firstName=Clark');
+     console.log(qryParams.firstName); // Çıxış: Clark
+     ```
+
+#### Üçüncü Tərəf Modulları
+
+Üçüncü tərəf modulları Node.js funksionallıqlarını genişləndirir. Bəzi məşhur nümunələr:
+
+- **Express**: Minimal və çevik Node.js web tətbiq çərçivəsi.
+- **Axios**: Browser və Node.js üçün vədəsiz HTTP müştərisi.
+- **AsyncJS**: Asinxron JavaScript ilə işləmək üçün güclü funksiyalar təmin edən yardımçı modul.
+
+Üçüncü tərəf modulları npm (Node Package Manager) vasitəsilə quraşdıra bilərsiniz:
+
+```sh
+npm install express
+```
+
