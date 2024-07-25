@@ -389,3 +389,125 @@ server.listen(8080, () => {
 - **Modullar**: Hər JavaScript faylı bir moduldur və Node.js HTTP kimi bir neçə daxili modulu əhatə edir.
 - **HTTP Modulu**: HTTP sorğularını dinləyən və onlara cavab verən veb serverləri yaratmaq üçün istifadə olunur.
 - **Server Yaratma**: `http.createServer()` ilə server instansiyası yaratmaq və `server.listen()` ilə müəyyən bir portda dinləməsini təmin etmək.
+
+----------------------------------------------------------------
+
+## Node.js Modulları ilə İş
+
+Node.js-də modullar tətbiq inkişafının əsas hissəsidir, kodu təşkil etməyə və təkrar istifadəyə imkan verir. Bir paket, bir və ya daha çox modulların kolleksiyasıdır və `package.json` faylı paket haqqında əsas məlumatları təmin edir. Budur, Node.js modulları ilə necə işləmək haqqında ətraflı məlumat:
+
+#### `package.json` Faylı
+
+`package.json` faylı, layihəniz haqqında metadata, asılılıqlar, skriptlər və s. daxil olan manifest kimi xidmət edir. Budur, bir `package.json` faylının əsas strukturu:
+
+```json
+{
+  "name": "today",
+  "version": "1.0.0",
+  "description": "A simple module to get today's date",
+  "main": "lib/today.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Your Name",
+  "license": "ISC"
+}
+```
+
+- **name**: Paketinizin adı.
+- **version**: Paketinizin versiyası.
+- **main**: Paketinizin giriş nöqtəsi (məsələn, `lib/today.js`).
+- **scripts**: Müxtəlif komanda skriptlərini çalışdırmaq üçün (məsələn, testlər).
+- **author**: Paketinizin müəllifi.
+- **license**: Paketinizin paylanma lisenziyası.
+
+#### `require` ilə Modulları İdxal Etmək
+
+Node.js tətbiqinizdə bir modulu istifadə etmək üçün `require` funksiyasından istifadə edərək idxal edirsiniz. Budur necə işləyir:
+
+1. **Sadə Modul İdxalı**:
+   Tutaq ki, `today.js` faylı əsas tətbiq faylınız olan `app.js` ilə eyni qovluqdadır.
+
+   ```javascript
+   // today.js
+   module.exports = {
+     getDate: function() {
+       return new Date().toDateString();
+     }
+   };
+   ```
+
+   ```javascript
+   // app.js
+   const today = require('./today');
+   console.log(today.getDate());
+   ```
+
+2. **Bir Qovluqda Varsayılan Modul**:
+   Əgər modulunuz bir qovluğun içindədirsə və əsas skript `index.js` adlanırsa, onu qovluq adını göstərərək idxal edə bilərsiniz.
+
+   ```javascript
+   // mod_today/index.js
+   module.exports = {
+     getDayOfWeek: function() {
+       const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+       return days[new Date().getDay()];
+     }
+   };
+   ```
+
+   ```javascript
+   // app.js
+   const modToday = require('./mod_today');
+   console.log(modToday.getDayOfWeek());
+   ```
+
+#### Modullardan İxrac Etmək
+
+Başqa fayllara funksiyalar və ya dəyərləri əlçatan etmək üçün `exports` obyektindən istifadə edirsiniz. Budur bir nümunə:
+
+```javascript
+// today.js
+exports.dayOfWeek = function() {
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  return days[new Date().getDay()];
+};
+```
+
+Bu modulu idxal etdiyiniz zaman, `dayOfWeek` funksiyasına giriş əldə edə bilərsiniz:
+
+```javascript
+// app.js
+const today = require('./today');
+console.log(today.dayOfWeek());
+```
+
+#### Layihə Strukturunun Nümunəsi
+
+Budur bir Node.js layihəsinin nümunə qovluq strukturu:
+
+```
+my-project/
+├── mod_today/
+│   └── index.js
+├── today.js
+├── app.js
+└── package.json
+```
+
+- **mod_today/index.js**: Modul məntiqini ehtiva edir.
+- **today.js**: Başqa bir modul faylı.
+- **app.js**: Əsas tətbiq faylı.
+- **package.json**: Layihə və asılılıqları haqqında məlumat verir.
+
+### Yekun
+
+- **package.json**: Node.js layihəniz haqqında metadata ehtiva edir.
+- **Modullar**: Layihənizdə təkrar istifadə edilə bilən JavaScript kod parçalarıdır.
+- **require**: Node.js-də modulları idxal etmək üçün istifadə olunur.
+- **exports**: Bir moduldan funksiyalar və ya dəyərləri əlçatan etmək üçün istifadə olunur.
+
+Kodunuzu modullara bölərək və layihənizi idarə etmək üçün `package.json` faylından istifadə edərək, miqyaslana bilən və saxlanıla bilən Node.js tətbiqləri yarada bilərsiniz.
+
+-----------------------------------------------------------------------
+
