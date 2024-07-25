@@ -260,7 +260,7 @@ Bu iki import metodunun fərqlərini və müvafiq istifadə hallarını başa d�
 
 ----------------------------------------------------------------
 
-### Server-Side JavaScript-ə Giriş
+## Server-Side JavaScript-ə Giriş
 
 JavaScript, veb inkişafında ən təsirli proqramlaşdırma dillərindən biri olmuşdur. Əvvəlcə statik veb səhifələrə dinamik davranış əlavə etmək üçün yaradılan JavaScript, indi həm müştəri, həm də server tərəflərində işləyən çox yönlü bir dildir. 
 
@@ -300,3 +300,92 @@ Node.js, JavaScript-in imkanlarını server tərəfinə qədər genişləndirir 
 - **JavaScript**: Əvvəlcə müştəri tərəfli dil kimi, indi Node.js ilə server tərəfli inkişafda istifadə olunur.
 - **Node.js**: Server tərəfli JavaScript-i təmin edən, miqyasa uyğun, səmərəli və sürətli server tətbiqlərinin inkişafını mümkün edən bir framework.
 - **Birləşmiş İnkişaf**: Həm müştəri, həm də server tərəfli kodu JavaScript-də yazmaq, inkişaf axınını sadələşdirir və yeni inkişaf etdiricilər üçün öyrənmə əyrisini azaldır.
+
+---------------------------------------------------
+
+## Node.js ilə Veb Server Yaratmaq
+
+Node.js, JavaScript-dən istifadə edərək miqyaslana bilən, eyni zamanda işləyə bilən server tətbiqləri qurmaq üçün güclü bir server-tərəf runtime mühitdir. Bu, hadisə idarə olunan, bloklamayan I/O modelinə əsaslanır, bu da onu məlumat-intensive real vaxt tətbiqləri üçün yüngül və səmərəli edir. 
+
+#### Əsas Konsepsiyalar
+
+1. **Single-Threaded Event Loop**: Node.js, hadisələr və callback funksiyaları vasitəsilə I/O əməliyyatlarını asinxron şəkildə idarə edən single-threaded hadisə döngüsündə işləyir.
+2. **Modules**: Node.js-də hər bir JavaScript faylı bir moduldur. Node.js, müxtəlif funksiyaları asanlaşdırmaq üçün HTTP modulu kimi daxili istifadə modulları ilə təmin olunur.
+
+#### Addım-addım Bələdçi
+
+1. **Quraşdırma**: Node.js-in quraşdırıldığına əmin olun. Siz onu [Node.js rəsmi veb saytından](https://nodejs.org/) yükləyə bilərsiniz.
+
+2. **Yeni JavaScript Faylı Yaradın**:
+   `server.js` (və ya istədiyiniz ad) adında yeni bir fayl yaradın.
+
+3. **HTTP Modulunu İdxal Edin**:
+   HTTP modulu təmin edilmiş Node.js ilə idxal edin.
+
+   ```javascript
+   const http = require('http');
+   ```
+
+4. **Serveri Yaradın**:
+   Yeni server instansiyası yaratmaq üçün `http.createServer` metodundan istifadə edin. Bu metod daxil olan sorğuları idarə edən və cavabları göndərən callback funksiyasını qəbul edir.
+
+   ```javascript
+   const server = http.createServer((req, res) => {
+       // Cavab HTTP başlığını HTTP statusu və Content type ilə təyin edin
+       res.writeHead(200, {'Content-Type': 'text/plain'});
+
+       // Cavab gövdəsini "Hello, World!" olaraq göndərin
+       res.end('Hello, World!\n');
+   });
+   ```
+
+5. **Serverin Bir Portda Dinləməsini Təmin Edin**:
+   Server instansiyasında `listen` metodunu çağıraraq onu müəyyən bir portda (məsələn, 8080) dinləmək üçün qurun.
+
+   ```javascript
+   server.listen(8080, () => {
+       console.log('Server http://127.0.0.1:8080/ ünvanında işləyir.');
+   });
+   ```
+
+6. **Serveri İcra Edin**:
+   Faylı yadda saxlayın və terminaldan Node.js istifadə edərək serveri işlədin.
+
+   ```sh
+   node server.js
+   ```
+
+   Terminalda `Server http://127.0.0.1:8080/ ünvanında işləyir.` mesajını görməlisiniz.
+
+7. **Serverə Giriş**:
+   Veb brauzerinizi açın və `http://127.0.0.1:8080/` ünvanına keçin. "Hello, World!" mesajını görməlisiniz.
+
+#### Tam Kod Nümunəsi
+
+Burada, Node.js ilə əsas veb server yaratmaq üçün tam kod verilmişdir:
+
+```javascript
+// HTTP modulunu idxal edin
+const http = require('http');
+
+// Serverin bir instansiyasını yaradın
+const server = http.createServer((req, res) => {
+    // Cavab HTTP başlığını HTTP statusu və Content type ilə təyin edin
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+
+    // Cavab gövdəsini "Hello, World!" olaraq göndərin
+    res.end('Hello, World!\n');
+});
+
+// Serverin 8080 portunda dinləməsini təmin edin
+server.listen(8080, () => {
+    console.log('Server http://127.0.0.1:8080/ ünvanında işləyir.');
+});
+```
+
+### Yekun
+
+- **Node.js**: Asinxron şəkildə I/O əməliyyatlarını idarə edən single-threaded, hadisə idarə olunan mühitdir.
+- **Modullar**: Hər JavaScript faylı bir moduldur və Node.js HTTP kimi bir neçə daxili modulu əhatə edir.
+- **HTTP Modulu**: HTTP sorğularını dinləyən və onlara cavab verən veb serverləri yaratmaq üçün istifadə olunur.
+- **Server Yaratma**: `http.createServer()` ilə server instansiyası yaratmaq və `server.listen()` ilə müəyyən bir portda dinləməsini təmin etmək.
