@@ -636,3 +636,80 @@ Node.js-də modullar, tətbiqləri effektiv şəkildə qurmaq və saxlamaq üç�
 npm install express
 ```
 
+-----------------------------------------------------------------------
+
+## Node Package Manager (NPM) 
+
+Paket meneceri, proqram layihələrinin etibar etdiyi kitabxanalar və paketlər kimi asılılıqları idarə etmək üçün vacib bir vasitədir. Node Package Manager (NPM), Node.js üçün default paket meneceridir və bu asılılıqları effektiv şəkildə idarə etməkdə mühüm rol oynayır.
+
+#### NPM-nin Əsas Funksiyaları
+
+1. **Əmr Sırası İnterfeysi (CLI)**:
+   - NPM, paketləri dərc etmək, yükləmək, quraşdırmaq, yeniləmək və silmək üçün komandalar təqdim edir.
+
+2. **Onlayn Repozitoriya**:
+   - NPM, JavaScript paketlərinin versiyalarını və asılılıqlarını izləyən ətraflı bir verilənlər bazasını saxlayır.
+
+#### Asılılıqları Anlamaq
+
+Asılılıqlar, layihənizin etibar etdiyi xarici kitabxanalar və ya paketlərdir. Bu asılılıqları əl ilə idarə etmək çətin və səhvlərə yol açan bir proses ola bilər ki, NPM bu prosesi avtomatlaşdıraraq üstünlük təşkil edir.
+
+#### `package.json` Faylı
+
+- **Məqsəd**: Layihə haqqında metadata, o cümlədən onun asılılıqlarını ehtiva edir.
+- **Vacib Sahələr**:
+  - `name`: Layihənin adı.
+  - `version`: Layihənin versiya nömrəsi.
+
+Əsas `package.json` faylı nümunəsi:
+
+```json
+{
+  "name": "my-project",
+  "version": "1.0.0"
+}
+```
+
+#### Paketlərin Quraşdırılması
+
+Paketlər, NPM vasitəsilə yerli və ya qlobal olaraq quraşdırıla bilər.
+
+1. **Yerli Quraşdırma**:
+   - **Əmr**: `npm install <package_name>`
+   - **İzahı**: Paketi, layihənizin qovluğunda olan `node_modules` qovluğunda quraşdırır və yalnız həmin layihəyə əlçatan edir.
+
+2. **Qlobal Quraşdırma**:
+   - **Əmr**: `npm install -g <package_name>`
+   - **İzahı**: Paketi qlobal olaraq quraşdırır və bu paketi maşındakı hər hansı bir layihəyə əlçatan edir. Qlobal quraşdırmaları diqqətlə istifadə edin ki, fərqli layihələr arasında versiya uyğunsuzluqlarının qarşısı alınsın.
+
+#### Əmr Nümunələri
+
+- **Yerli Quraşdırma**:
+
+  ```sh
+  npm install express
+  ```
+
+- **Qlobal Quraşdırma**:
+
+  ```sh
+  npm install -g express
+  ```
+
+#### Paketlərin İdarə Edilməsi
+
+NPM, paketləri yeniləmək və silmək üçün də komandalar təqdim edir:
+
+- **Paketin Yenilənməsi**:
+
+  ```sh
+  npm update <package_name>
+  ```
+
+- **Paketin Silinməsi**:
+
+  ```sh
+  npm uninstall <package_name>
+  ```
+
+----------------------------------------------------------------
