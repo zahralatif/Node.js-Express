@@ -792,3 +792,93 @@ req.end();
 
 ----------------------------------------------------------------------
 
+## Callback Funksiyaları Yaratmaq
+
+### Əsas Konsepsiyalar
+
+- **Asinxron Framework**: Node.js geniş şəkildə callback funksiyalarını istifadə edərək asinxron əməliyyatların nəticələrini idarə edir və beləliklə, bloklanmayan icra (execution) təmin edilir.
+
+- **Callback Səhv İdarəetməsi (Error Handling in Callbacks)**: Callback funksiyasında birinci parametr adətən səhv obyektidir. Əgər səhv obyekti müəyyən olunubsa, bu bir səhv baş verdiyini göstərir; əks halda, əməliyyat uğurla başa çatmışdır.
+
+### İş Axını Nümunəsi (Workflow Example)
+
+1. **Səhv Yoxlaması (Error Handling)**:
+   - Callback funksiyası əvvəlcə səhv parametrinin müəyyən olunub-olunmadığını yoxlayır.
+   - Əgər bir səhv varsa, onu idarə edir və lazımi təmizləmələri aparır.
+   - Əgər səhv yoxdursa, nəticəni işləyir.
+
+2. **Hava Durumu Modulunda Callback Funksiyası**:
+   - Əsas tətbiq hava durumu modulunun `current` funksiyasını yer parametri ilə çağırır.
+   - Hava durumu modulu HTTP sorğusu çağırır və cavabı idarə etmək üçün anonim geri çağırış funksiyası təyin edir.
+
+3. **HTTP Sorğusu üçün Callback Funksiyası**:
+   - Callback funksiyası `data` (data parçaları alındıqda) və `end` (cavab tam olduqda) kimi hadisələri işləyir.
+
+### Kod Nümunəsi
+
+
+```javascript
+const http = require('http');
+
+const weather = {
+    current: function(location, resultCallback) {
+        const options = {
+            hostname: 'api.weather.gov',
+            path: `/stations/${location}/observations/latest`,
+            method: 'GET',
+        };
+
+        const req = http.request(options, (res) => {
+            let data = '';
+
+            res.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            res.on('end', () => {
+                const weatherData = JSON.parse(data);
+                const temp_f = weatherData.properties.temperature.value;
+                resultCallback(null, temp_f);
+            });
+        });
+
+        req.on('error', (e) => {
+            resultCallback(e, null);
+        });
+
+        req.end();
+    }
+};
+
+// Əsas tətbiq
+weather.current('KSFO', (err, temp_f) => {
+    if (err) {
+        console.error(`Hava durumunu aldıqda error: ${err.message}`);
+    } else {
+        console.log(`Cari hava dərəcəsi ${temp_f} Fahrenheit dərəcədir.`);
+    }
+});
+```
+
+### Callback Funksiyası Axını
+
+1. **Tətbiq Çağırışı (Application Call)**:
+   - Əsas tətbiq `weather.current()` funksiyasını bir yer və bir geri çağırış funksiyası ilə çağırır.
+
+2. **Hava Durumu Modulu**:
+   - `weather.current()` HTTP sorğusu edir.
+   - Əgər sorğu uğurlu olarsa, data toplayır və callback funksiyasını `null` səhv və nəticə olaraq temperaturla çağırır.
+   - Əgər sorğu uğursuz olarsa, callback funksiyasını error ilə çağırır.
+
+3. **Nəticələri İdarəetmə**:
+   - Əsas tətbiqdə callback funksiyası səhvləri yoxlayır.
+   - Əgər bir səhv varsa, onu idarə edir; əks halda, temperaturu işləyir və göstərir.
+
+### Xülasə
+
+- **Asinxron İcra (Asynchronous Execution)**: Node.js asinxron əməliyyatları idarə etmək üçün callback-lardan istifadə edir və bloklanmayan kod icrasını təmin edir.
+- **Səhv İdarəetməsi (Error Handling)**: Callback funksiyaları səhvləri yoxlayır və onları müvafiq şəkildə idarə edir.
+- **Callback Zənciri (Callback Chain)**: Bir callback nəticələri digərinə ötürərək məlumat və icra axınını davam etdirə bilər.
+
+----------------------------------------------------------------------------
+
