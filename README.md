@@ -713,3 +713,82 @@ NPM, paketləri yeniləmək və silmək üçün də komandalar təqdim edir:
   ```
 
 ----------------------------------------------------------------
+
+## Asinxron I/O ilə Callback Proqramlaşdırması
+
+### Əsas Konsepsiyalar
+
+- **Asinxron Şəbəkə Əməliyyatları (Asynchronous Network Operations)**: Node.js-də şəbəkə əməliyyatları asinxron işləyir ki, cavab gözləyərkən prosessinq vaxtının itirilməsinin qarşısını alsın.
+  
+- **Non-blocking Əməliyyatlar**: Node.js-də bütün şəbəkə əməliyyatları dərhal geri qaytarılır, tətbiqin şəbəkə əməliyyatının tamamlanmasını gözləmədən prosessinqə davam etməsinə imkan verir.
+
+- **Callback Funksiyaları**: Node.js asinxron əməliyyatların nəticələrini idarə etmək üçün callback funksiyalarından istifadə edir. Bu funksiyalar şəbəkə əməliyyatı tamamlandıqda çağırılır.
+
+### İş Axını Nümunəsi (Workflow Example)
+
+1. **HTTP Sorğusu**:
+   - Tətbiq `HTTP.request()` funksiyasını çağırır və bu funksiya uzaq veb serverə sorğu göndərir.
+   - Node.js cavabı gözləmədən sorğunun uğurla göndərildiyini göstərən nəticəni dərhal geri qaytarır.
+
+2. **Callback İdarəetməsi (Callback Handling)**:
+   - Uzaq server cavab verdikdə, Node.js `HTTP.request()` çağırışında təyin edilmiş callback funksiyanı çağırır.
+   - Bu callback funksiya HTTP cavab mesajını emal edir.
+
+### Ssenari Təhlili (Scenario Breakdown)
+
+1. **Sadə HTTP Sorğusu**:
+   - Tətbiq `HTTP.request()` funksiyasını çağırır.
+   - Node.js sorğunu göndərir və uğur mesajı geri qaytarır.
+   - HTTP cavabı alındıqda, Node.js təyin edilmiş callback funksiyanı çağıraraq cavabı idarə edir.
+
+2. **Mürəkkəb Ssenari**:
+   - Tətbiq xüsusi bir Node.js modulunu çağırır, bu modul `HTTP.request()` funksiyasını çağırır.
+   - Modul sorğunu göndərir və control-u tətbiqə qaytarır.
+   - Cavab alındıqda, Node.js moduldakı təyin edilmiş callback funksiyanı çağırır və bu funksiya `data` və `end` kimi hadisələri emal edir.
+
+### Kod Nümunəsi
+
+Budur, Node.js istifadə edərək HTTP sorğusu etmək üçün bir nümunə:
+
+```javascript
+const http = require('http');
+
+const options = {
+    hostname: 'api.weather.gov',
+    path: '/stations/KSFO/observations/latest',
+    method: 'GET',
+};
+
+const req = http.request(options, (res) => {
+    let buffer = '';
+
+    res.on('data', (chunk) => {
+        buffer += chunk;
+    });
+
+    res.on('end', () => {
+        console.log(buffer);
+    });
+});
+
+req.on('error', (e) => {
+    console.error(`Problem with request: ${e.message}`);
+});
+
+req.end();
+```
+
+### Hadisə İdarəetməsi (Event Handling)
+
+- **Data Hadisəsi**: Hər dəfə bir data parçası alındıqda işləyir.
+- **End Hadisəsi**: Cavab tam olduqda işləyir.
+- **Error Hadisəsi**: Sorğuda bir səhv olduqda işləyir.
+
+### Xülasə
+
+- **Non-blocking Əməliyyatlar**: Node.js I/O əməliyyatlarını asinxron şəkildə idarə edir ki, tətbiq bloklanmasın.
+- **Callbacklər**: Asinxron əməliyyatlardan gələn cavabları idarə etmək üçün istifadə olunur.
+- **Hadisə yönümlü Arxitektura (Event-driven Architecture)**: Node.js şəbəkə əməliyyatları zamanı `data`, `end` və `error` kimi hadisələr yaradır və bu hadisələr hadisə dinləyiciləri (event listeners) vasitəsilə idarə oluna bilər.
+
+----------------------------------------------------------------------
+
