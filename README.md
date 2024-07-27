@@ -1010,3 +1010,108 @@ Callback cəhənnəmini və etibar problemlərini (trust issues) azaltmaq üçü
 
 ------------------------------------------------------------------------------------
 
+## Promislər
+
+### Promise nədir?
+
+Promise, asinxron əməliyyatın sonunda əldə olunacaq nəticəni (və ya uğursuzluğu) təmsil edən obyektdir. Promiselərin üç vəziyyəti var:
+
+1. **Pending (Gözlənilir)**: Promise-in ilkin vəziyyəti.
+2. **Resolved (Həll olunmuş)**: Asinxron əməliyyatın uğurla tamamlandığı vəziyyət.
+3. **Rejected (Rədd edilmiş)**: Asinxron əməliyyatın uğursuz olduğu vəziyyət.
+
+### Promise Yaratmaq
+
+Promise-i `Promise` konstruktorundan (constructor) istifadə edərək yarada bilərsiniz. 
+
+fayl oxumaq üçün promise istifadə olunan bir nümunə:
+
+```javascript
+const fs = require('fs');
+
+function readFile(filename) {
+    return new Promise((resolve, reject) => {
+        fs.readFile(filename, 'utf8', (err, data) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data);
+            }
+        });
+    });
+}
+
+// İstifadə nümunəsi:
+readFile('example.txt')
+    .then(data => console.log(data))
+    .catch(err => console.error(err));
+```
+
+Bu nümunədə, `readFile` faylın məzmununu oxuyan bir promise qaytarır. Əgər fayl uğurla oxunursa, promise faylın məlumatı ilə həll olunur. Əgər səhv varsa, promise səhvlə rədd edilir.
+
+### HTTP Sorğuları üçün Promislərdən İstifadə
+
+HTTP sorğuları API-lərlə işləyərkən promislər üçün ümumi istifadə halıdır. Node.js-də `axios` paketi HTTP sorğularını promislərə bükən populyar bir kitabxanadır.
+
+Burada `axios` istifadə olunan bir nümunə:
+
+```javascript
+const axios = require('axios');
+
+// GET sorğusu etmək
+axios.get('https://jsonplaceholder.typicode.com/todos/1')
+    .then(response => {
+        console.log('Həll olundu:', response.data);
+    })
+    .catch(error => {
+        console.error('Rədd edildi:', error.message);
+    });
+```
+
+Bu nümunədə, `axios.get` promise qaytarır. Promise HTTP sorğusu tamamlanana qədər gözlənilir vəziyyətdədir. Əgər sorğu uğurla tamamlanırsa, promise həll olunur və `.then` metodu cavab məlumatı ilə çağırılır. Əgər sorğu uğursuz olursa, promise rədd edilir və `.catch` metodu səhvlə çağırılır.
+
+### Promislərin İstifadəsinin Faydaları
+
+1. **Oxunaqlılığın Təkmilləşdirilməsi (Improved Readability)**: Promislər, dərin iç-içə callback-lərlə müqayisədə, daha oxunaqlı və saxlanması asan olan asinxron kod yazmağa imkan verir.
+2. **Zəncirləmə (Chaining)**: Promislər zəncirlənə bilər, bu da ardıcıl asinxron əməliyyatları yerinə yetirməyə imkan verir.
+3. **Səhvlərin İdarə Edilməsi (Error Handling)**: Promislər `.catch` istifadə edərək səhvləri təmiz bir şəkildə idarə etməyə imkan verir.
+
+### Nümunə: Promislərin Zəncirlənməsi
+
+```javascript
+const fs = require('fs').promises;
+
+function readFile(filename) {
+    return fs.readFile(filename, 'utf8');
+}
+
+function writeFile(filename, data) {
+    return fs.writeFile(filename, data);
+}
+
+// Promislərin zəncirlənməsi
+readFile('example.txt')
+    .then(data => {
+        console.log('Fayl məzmunu:', data);
+        return writeFile('example_copy.txt', data);
+    })
+    .then(() => {
+        console.log('Fayl uğurla kopyalandı');
+    })
+    .catch(err => {
+        console.error('Səhv:', err.message);
+    });
+```
+
+Bu nümunədə, `readFile` və `writeFile` promislər qaytarır. Promislər faylı oxumaq və sonra məzmununu başqa bir fayla yazmaq üçün zəncirlənir. Əgər hər hansı əməliyyat uğursuz olursa, səhv `.catch` metodunda tutulur.
+
+### Nəticə
+
+- Promise, asinxron bir metod tərəfindən qaytarılan və əməliyyatın nəhayət tamamlanmasını və ya uğursuzluğunu təmsil edən obyektdir.
+- Promise-in ilkin vəziyyəti gözləniləndir.
+- Promislər həll oluna (uğurlu) və ya rədd edilə bilər.
+- Node.js-də `axios` paketi HTTP sorğularını idarə etmək üçün geniş istifadə olunur və promislər qaytarır.
+- Promislər kodun oxunaqlılığını artırır, asinxron əməliyyatların zəncirlənməsinə imkan verir və səhvlərin idarə edilməsini təmiz bir şəkildə təmin edir.
+
+---------------------------------------------------------------------------
+
