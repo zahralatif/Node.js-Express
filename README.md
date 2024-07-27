@@ -906,3 +906,107 @@ Callback-ların, xüsusən anonim olanların, istifadəsini anlamaq Node.js-də 
 
 -----------------------------------------------------------------------------------
 
+## Callbacklarla Bağlı Problemlər (Issues with Callbacks)
+
+### Callbackları Anlamaq
+
+Callback, başqa bir funksiyaya arqument olaraq ötürülən və nəticə əldə edildikdən sonra icra olunan funksiyadır. Callbacklər asinxron JavaScript üçün vacibdir, funksiyanın yalnız tələb olunan iş tamamlandıqdan sonra işləməsini təmin edir. 
+
+```javascript
+function message() {
+    console.log("Bu mesaj 3 saniyədən sonra göstərilir");
+}
+
+setTimeout(message, 3000);
+```
+
+Bu nümunədə `message` `setTimeout` funksiyasına ötürülən callback funksiyasıdır. 3 saniyə gözlədikdən sonra, `setTimeout` `message` funksiyasını icra edir.
+
+### Callbacklərin Ümumi İstifadə Halları
+
+Callbacklər tez-tez aşağıdakı işlər üçün istifadə olunur:
+
+- Məlumat bazasından dəyərlərə giriş
+- Şəkillərin yüklənməsi
+- Faylların oxunması
+
+Bu işlər tez-tez xarici xidmətlər tərəfindən təmin olunan resursları əhatə edir və callbacklər bu resurslar mövcud olana qədər gözləyir.
+
+### Callback Cəhənnəmi (Callback Hell)
+
+Callbacklərdən ardıcıl tapşırıqları icra etmək üçün istifadə edərkən, funksiyalar bir-birinin içində iç-içə hala gələ bilər, bu da mürəkkəb və oxunması çətin koda səbəb olur. Bu "Callback Cəhənnəmi" və ya "Piramida Effekti" kimi tanınır. Məsələn, tort bişirmək asinxron tamamlanamayan ardıcıl addımları əhatə edir:
+
+1. Tortun tərkiblərini alın.
+2. Tərkibləri qarışdırın.
+3. Tortu bişirin.
+4. Tortu bəzəyin.
+5. Tortu təqdim edin.
+
+Kodda bu belə görünə bilər:
+
+```javascript
+purchaseIngredients(function(ingredients) {
+    combineIngredients(ingredients, function(mixture) {
+        bakeCake(mixture, function(cake) {
+            decorateCake(cake, function(decoratedCake) {
+                serveCake(decoratedCake);
+            });
+        });
+    });
+});
+```
+
+### İdarəetmənin İnversiyası (IoC - Inversion of Control)
+
+İdarəetmənin inversiyası, nəzarətin kodunuzun xaricində olmasıdır. Callbacklərlə, nəzarət tez-tez üçüncü tərəf koduna verilir, bu da bir neçə problemi gətirə bilər:
+
+- **Çoxlu Çağırışlar (Multiple Calls)**: Callback bir neçə dəfə çağırıla bilər (məsələn, bir istifadəçi düyməni bir neçə dəfə basdıqda).
+- **Qaçırılmış Çağırışlar (Missed Calls)**: Callback ümumiyyətlə çağırılmaya bilər.
+- **Vaxtlama Problemləri (Timing Issues)**: Callback çox erkən və ya çox gec çağırıla bilər.
+- **Kontekst İtirmək (Context Loss)**: Callback kontekstini itirə bilər və ya səhv arqumentləri geri qaytara bilər.
+
+### Nümunə: Çoxlu Klikləri İdarə Etmək
+
+Bir üçüncü tərəf kodunda səhv olduğunu və callbackin bir neçə dəfə çağırıldığını düşünək:
+
+```javascript
+let isProcessing = false;
+
+function processClick() {
+    if (!isProcessing) {
+        isProcessing = true;
+        // Kartı ödə
+        chargeCard(function(err, result) {
+            if (err) {
+                // Səhvi idarə et
+            } else {
+                // Nəticəni idarə et
+            }
+            isProcessing = false;
+        });
+    }
+}
+
+button.addEventListener('click', processClick);
+```
+
+Bu nümunədə `isProcessing` kartın yalnız bir dəfə ödənməsini təmin edir, düymə bir neçə dəfə basılsa belə. Ancaq, callback heç vaxt çağırılmadıqda əlavə məntiq tələb olunur, bu da kodu daha mürəkkəbləşdirir.
+
+### Callback Cəhənnəmini Azaltmaq (Mitigating Callback Hell)
+
+Callback cəhənnəmini və etibar problemlərini (trust issues) azaltmaq üçün bir neçə strategiya var:
+
+1. **Şərhlər Yazmaq**: Kodun axışını izah etmək üçün şərhlər əlavə etmək.
+2. **Funksiyaları Bölmək**: Böyük funksiyaları daha kiçik, idarə edilə bilən funksiyalara bölmək.
+3. **Promises İstifadə Etmək**: Promiselər asinxron əməliyyatları idarə etmək üçün daha oxunaqlı bir yol təmin edir.
+4. **Async/Await İstifadə Etmək**: Async/await sintaksisi asinxron kodu idarə etməyi daha da sadələşdirir.
+
+### Nəticə
+
+- Callbacklər asinxron JavaScript üçün vacibdir.
+- "Callback cəhənnəmi" callback funksiyalarının iç-içə olmasına və kod oxunaqlılığını və saxlanmasını çətinləşdirir.
+- İdarəetmənin inversiyası problemləri üçüncü tərəf koduna etibar edərkən yaranır.
+- Bu problemləri azaltmaq üçün şərhlər yazmaq, funksiyaları bölmək və Promiselər və ya async/await istifadə etmək kimi strategiyalar mövcuddur.
+
+------------------------------------------------------------------------------------
+
