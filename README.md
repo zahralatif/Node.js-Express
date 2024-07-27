@@ -882,3 +882,27 @@ weather.current('KSFO', (err, temp_f) => {
 
 ----------------------------------------------------------------------------
 
+## Node.js-də Anonim Callback Funksiyalarının İstifadəsi
+
+### Əsas Konsepsiyalar
+
+- **Callback-lar və Asinxron Sorğular**: Node.js-də tətbiqinizdən kənarda (məsələn, xarici API-ə) sorğular etmək yaygındır. Callback-ların necə işlədiyini anlamaq vacibdir, çünki onlar bu asinxron əməliyyatların nəticələrini əsas axını bloklamadan idarə edirlər.
+  
+- **Anonim vs. Adlı Callback-lar**: Callback-lar anonim və ya adlı ola bilər. Anonim callback-lar, sadəlik və oxunaqlılıq üçün tez-tez istifadə olunur, xüsusən də callback məntiqi başqa yerdə təkrar istifadə olunmadıqda.
+
+### Nümunə Ssenari: Hava Durumu API Sorğusu
+
+Bir veb sayt qurduğunuzu düşünün ki, cari temperaturu göstərir. Temperaturu əldə etmək üçün xarici hava durumu API-ə sorğu göndərməlisiniz. Əsas axını API cavabını gözləyərkən bloklasanız, bu istifadəçilərin saytla qarşılıqlı əlaqəsini maneə törədərdi. Bunun əvəzinə, cavabı asinxron şəkildə idarə etmək üçün callback-dan istifadə edirsiniz.
+
+### Anonim Callback-ların Faydaları
+
+- **Sadəlik və Oxunaqlılıq (Simplicity and Readability)**: Anonim funksiyalar daha sadə və oxunaqlıdır, xüsusən də qısa, birdəfəlik istifadə olunan callback-lar üçün.
+- **Məntiqin Məhdudlaşdırılması (Scoped Logic)**: Geri çağırışCallback-in məntiqi funksiya çağırışının daxilində saxlanılır və bu, kodun izlənməsini asanlaşdırır.
+- **Arrow Funksiyalar**: Arrow sintaksisdən (`=>`) istifadə edərək, kodu daha da qısa edə bilərsiniz.
+
+### Nəticə
+
+Callback-ların, xüsusən anonim olanların, istifadəsini anlamaq Node.js-də asinxron proqramlaşdırmanı mənimsəmək üçün vacibdir. Onlar tətbiqinizin asinxron əməliyyatları effektiv şəkildə idarə etməsinə imkan verir, istifadəçi təcrübəsini cavabdeh və performanslı saxlayır. Anonim callback-lardan istifadə edərək, callback məntiqi sadə və təkrar istifadə olunmadıqda kodu təmiz və idarə edilə bilən saxlayırsınız.
+
+-----------------------------------------------------------------------------------
+
