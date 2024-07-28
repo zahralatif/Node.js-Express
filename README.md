@@ -1343,3 +1343,123 @@ connectToURL('https://api.publicapis.org/entries');
 
 ----------------------------------------------------------------------
 
+## Node.js İmkanlarının Genişləndirilməsi
+
+Node.js ilə HTTP server yaratmaq sadədir, lakin default Node.js frameworku məhdud imkanlara malikdir. Routing, daxil olan faylların parse edilməsi, autentifikasiya və verilənlər bazası bağlantıları kimi web server funksionallığının bir çox aspekti üçün Node.js-nin əsas imkanlarını genişləndirmək üçün xarici kitabxanalara və paketlərə ehtiyac var.
+
+### Nümunə: Hava Məlumatlarının Parse Edilməsi
+
+San Francisco Beynəlxalq Hava Limanı üçün hava məlumatlarına ehtiyac olduğunu düşünək. Bu məlumatları əldə etmək üçün xarici bir web serverə HTTP sorğusu göndərə və alınan məlumatları manual olaraq parse edə bilərik.
+
+1. Hava məlumatları serverinə HTTP sorğusu göndərin.
+2. XML cavabını string kimi parse edin.
+3. XML cavabından temperatur məlumatlarını çıxarın.
+
+### XML-in String Funksiyaları ilə Parse Edilməsi
+
+JavaScript string funksiyalarından istifadə edən sadə yanaşma:
+
+```javascript
+const http = require('http');
+
+const options = {
+    hostname: 'example.com',
+    port: 80,
+    path: '/weather',
+    method: 'GET'
+};
+
+const req = http.request(options, (res) => {
+    let buffer = '';
+    
+    res.on('data', (chunk) => {
+        buffer += chunk;
+    });
+
+    res.on('end', () => {
+        const matches = buffer.match(/<temp_f>(.*?)<\/temp_f>/);
+        if (matches) {
+            const temperature = matches[1];
+            console.log(`Temperature: ${temperature}`);
+        } else {
+            console.log('Temperature data not found');
+        }
+    });
+});
+
+req.on('error', (e) => {
+    console.error(`Problem with request: ${e.message}`);
+});
+
+req.end();
+```
+
+### String Parsingin Məhdudiyyətləri
+
+- **XML Strukturunu Nəzərə Almır (Ignores XML Structure)**: String uyğunlaşdırma XML məlumat strukturunu nəzərə almır, bu da onu daha az etibarlı edir.
+- **Səhv Yaratma Riski (Error-Prone)**: Zədələnmiş XML məlumatları səhvlərə səbəb ola bilər.
+- **Effektiv Deyil (Inefficient)**: Kompleks XML məlumatları üçün XML ağacının qurulması string uyğunlaşdırmadan daha effektivdir.
+- **Baxım (Maintenance)**: XML strukturundakı dəyişikliklər regular ifadənin yenilənməsini tələb edir.
+
+### XML-i xml2js ilə Parse Etmək
+
+Daha güclü bir yanaşma `xml2js` paketindən istifadə edərək XML məlumatlarını JavaScript obyektinə parse etməkdir. Bu paket tamamilə JavaScript ilə yazılmışdır və xarici XML parsinq kitabxanalarına ehtiyac yoxdur.
+
+#### Quraşdırma
+
+`xml2js` paketindən istifadə etmək üçün onu npm vasitəsilə quraşdırmalısınız:
+
+```sh
+npm install xml2js
+```
+
+#### xml2js ilə Nümunə
+
+Budur, XML məlumatlarını `xml2js` ilə necə parse etmək olar:
+
+```javascript
+const http = require('http');
+const xml2js = require('xml2js');
+
+const options = {
+    hostname: 'example.com',
+    port: 80,
+    path: '/weather',
+    method: 'GET'
+};
+
+const req = http.request(options, (res) => {
+    let buffer = '';
+    
+    res.on('data', (chunk) => {
+        buffer += chunk;
+    });
+
+    res.on('end', () => {
+        xml2js.parseString(buffer, (err, result) => {
+            if (err) {
+                console.error('Failed to parse XML:', err);
+                return;
+            }
+            const temperature = result.current_observation.temp_f[0];
+            console.log(`Temperature: ${temperature}`);
+        });
+    });
+});
+
+req.on('error', (e) => {
+    console.error(`Problem with request: ${e.message}`);
+});
+
+req.end();
+```
+
+### Əsas Müddəalar
+
+- **Üçüncü Tərəf Paketləri**: İnkişaf etdiricilər Node.js funksionallığını `xml2js` kimi üçüncü tərəf paketlərindən istifadə edərək genişləndirirlər.
+- **String Parsinqi**: XML məlumatlarının string parsinqi səhvlərə meyillidir və məlumat strukturunu nəzərə almır.
+- **xml2js**: Bu paket XML stringlərini JavaScript obyektlərinə çevirir, XML məlumatları ilə işləməyi asanlaşdırır.
+- **npm**: Node.js paketlərini idarə etmək üçün npm tətbiqindən istifadə edin və layihəniz üçün lazım olan asılılıqların olduğunu təmin edin.
+
+------------------------------------------------------------------------
+
