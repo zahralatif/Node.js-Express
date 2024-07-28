@@ -1463,3 +1463,104 @@ req.end();
 
 ------------------------------------------------------------------------
 
+## Üçüncü Tərəf Node.js Uzantıları (Extensions) ilə İşləmək
+
+Node.js-də üçüncü tərəf paketlərdən istifadə inkişafı əhəmiyyətli dərəcədə sadələşdirir, layihələrin tamamlanmasını sürətləndirir və funksionallığı artırır. Geniş istifadə olunan bəzi paketlər və onların üstünlükləri:
+
+### Serverless Framework
+
+Serverless Framework buludda serverless mikroxidmətləri geniş infrastruktur koduna ehtiyac olmadan yerləşdirməyə imkan verir. Serverless tətbiqlərinin yaradılmasını, konfiqurasiyasını və yerləşdirilməsini sadələşdirir, bulud inkişafını daha əlçatan və effektiv edir.
+
+### Lodash
+
+Lodash arraylər, obyektlər və digər kolleksiyalar üzərində işləmək üçün çoxsaylı funksiyalar təqdim edən utilitar kitabxanadır. Elementlərin tapılması, məlumatların sıralanması və kolleksiyaların manipulyasiyası kimi tapşırıqları sadələşdirir, inkişaf etdiricilərə vaxt və səylərini qənaət etdirir.
+
+### Axios
+
+Axios, RESTful API-lərlə qarşılıqlı əlaqəni asanlaşdıran promise-based HTTP müştərisidir. GET, POST, PUT, DELETE və digər HTTP metodlarını dəstəkləyir və promise və async/await üçün daxilində dəstəklə sorğuların və cavabların idarə edilməsini sadələşdirir.
+
+### Express Middleware
+
+Express tətbiqləri tez-tez müxtəlif funksionallıqlar üçün middleware-lərdən asılıdır, o cümlədən:
+
+- **Autentifikasiya**: JSON Web Tokens (JWT) kimi autentifikasiya üçün middleware web tətbiqlərinin təhlükəsizliyini sadələşdirir.
+- **Body Parsing**: `body-parser` kimi middleware-lər daxil olan sorğu body-lərini işləyir, form təqdimatları və JSON məlumatlarının idarə edilməsini asanlaşdırır.
+- **Logging**: `morgan` kimi middleware-lər HTTP sorğularını qeydə alır, debugging və monitorinqdə kömək edir.
+
+### Nümunə: Axios və Lodash istifadə edilməsi
+
+Bir Node.js tətbiqində Axios və Lodash-dan necə istifadə edə bilərsiniz:
+
+```javascript
+const axios = require('axios');
+const _ = require('lodash');
+
+// Public API-dən məlumatların əldə edilməsi
+async function fetchData(url) {
+    try {
+        const response = await axios.get(url);
+        const data = response.data;
+
+        // Lodash istifadə edərək məlumatları filtr edin və sıralayın
+        const filteredData = _.filter(data.entries, entry => entry.Category === 'Animals');
+        const sortedData = _.sortBy(filteredData, 'API');
+
+        sortedData.forEach(entry => {
+            console.log(`API: ${entry.API}, Description: ${entry.Description}`);
+        });
+    } catch (error) {
+        console.error(`Error fetching data: ${error}`);
+    }
+}
+
+fetchData('https://api.publicapis.org/entries');
+```
+
+### Verilənlər Bazaları ilə İşləmək
+
+Verilənlər bazaları ilə işləyərkən, NPM paketləri həm relasional, həm də NoSQL bazaları ilə qarşılıqlı əlaqəni sadələşdirir. Populyar bəzi paketlərə aşağıdakılar daxildir:
+
+- **Sequelize**: PostgreSQL, MySQL və SQLite kimi SQL bazaları üçün ORM.
+- **Mongoose**: MongoDB üçün ODM, sxem dizaynını və məlumat doğrulamasını sadələşdirir.
+- **Knex.js**: Müxtəlif relasional verilənlər bazaları üçün SQL sorğu qurucusu, ORM-lərdən daha çevik yanaşma təklif edir.
+
+### Nümunə: Mongoose ilə MongoDB istifadə edilməsi
+
+Mongoose istifadə edərək MongoDB bazası ilə necə qarşılıqlı əlaqə qurmaq olar:
+
+```javascript
+const mongoose = require('mongoose');
+
+// Bazaya qoşulma
+mongoose.connect('mongodb://localhost/mydatabase', { useNewUrlParser: true, useUnifiedTopology: true });
+
+// Sxem təyin edilməsi
+const userSchema = new mongoose.Schema({
+    name: String,
+    email: String,
+    password: String
+});
+
+// Model yaradılması
+const User = mongoose.model('User', userSchema);
+
+// Yeni istifadəçinin yaradılması və saxlanması
+const newUser = new User({ name: 'John Doe', email: 'john.doe@example.com', password: 'securepassword' });
+newUser.save((err) => {
+    if (err) {
+        console.error('Error saving user:', err);
+    } else {
+        console.log('User saved successfully');
+    }
+
+    // Bazanın əlaqəsinin bağlanması
+    mongoose.connection.close();
+});
+```
+
+### Nəticə
+
+Üçüncü tərəf Node.js paketlərindən istifadə inkişaf səmərəliliyini artırır və inkişaf etdiricilərə dayanıqlı, miqyaslana bilən tətbiqlər yaratmağa imkan verir. Serverless Framework, Lodash, Axios və verilənlər bazası konnektorları kimi paketlər ümumi tapşırıqları sadələşdirir və müasir web tətbiqləri yaratmaq üçün güclü alətlər təqdim edir.
+
+------------------------------------------------------------------------------
+
