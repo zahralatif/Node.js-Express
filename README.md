@@ -1223,3 +1223,123 @@ JSON (JavaScript Object Notation) məlumat seriyalizasiyası üçün standartdı
 
 ----------------------------------------------------------------------------------------
 
+## Async/Await-a Giriş
+
+JavaScript single-threaded skript dilidir, yəni proseslər eyni zamanda deyil, ardıcıl olaraq baş verir. Bu məhdudiyyət Promises vasitəsilə həll olundu. Promises sinxron proqramlaşdırma problemlərini həll etsə də, dərinləşmiş `then` çağırışları kodun strukturunu və oxunaqlığını mürəkkəbləşdirə bilər.
+
+ES2017-də `async/await` təqdim olundu, bu, daha təmiz və oxunaqlı asinxron kod yazmaq üçün bir yol təqdim edir. Bir promise-ni gözləməklə, promise yerinə yetirildikdə nəticəni emal edə və ya promise rədd edildikdə hər hansı bir səhvlə başa çıxa bilərsiniz.
+
+### Promises ilə Nümunə
+
+Burada API sorğusunu idarə etmək üçün Promises istifadə olunan bir nümunə var:
+
+```javascript
+const axios = require('axios');
+const connectToURL = (url) => {
+  const req = axios.get(url);
+  req.then(resp => {
+      let listOfEntries = resp.data.entries;
+      listOfEntries.forEach((entry) => {
+        console.log(entry.Category);
+      });
+    })
+  .catch(err => {
+      console.log(err.toString());
+  });
+}
+console.log("Before connect URL");
+connectToURL('https://api.publicapis.org/entries');
+console.log("After connect URL");
+```
+
+### Async/Await ilə Nümunə
+
+Eyni nümunə daha yaxşı oxunaqlıq üçün `async/await` istifadə olunaraq yerinə yetirilə bilər:
+
+```javascript
+const axios = require('axios');
+const connectToURL = async (url) => {
+    try {
+        const response = await axios.get(url);
+        const listOfEntries = response.data.entries;
+        listOfEntries.forEach((entry) => {
+            console.log(entry.Category);
+        });
+    } catch (error) {
+        console.error(error.toString());
+    }
+}
+console.log("Before connect URL");
+connectToURL('https://api.publicapis.org/entries');
+console.log("After connect URL");
+```
+
+### Asinxron Fəaliyyətlərin Zəncirlənməsi
+
+`Async/await` ardıcıl olaraq baş verməli olan bir neçə asinxron fəaliyyəti idarə edərkən özünü göstərir. Burada əvvəlcə girişlərin siyahısını aldığımız və sonra "A" ilə başlayan hər bir kateqoriya üçün təfərrüatları gətirdiyimiz bir nümunə var:
+
+#### Promises istifadə edərək
+
+```javascript
+const axios = require('axios');
+async function connectToURL(url) {
+    try {
+        const response = await axios.get(url);
+        const listOfEntries = response.data.entries;
+        let categories = new Set();
+        
+        // Unikal kateqoriyaları çıxar
+        listOfEntries.forEach((entry) => {
+            categories.add(entry.Category);
+        });
+        
+        // "A" ilə başlayan hər bir kateqoriya üçün təfərrüatları sorğu et
+        for (let category of categories) {
+            if (category.startsWith("A")) {
+                const resp = await axios.get(`https://api.publicapis.org/entries?Category=${category}`);
+                console.log(`${category} - ${resp.data.count}`);
+            }
+        }
+    } catch (error) {
+        console.error(error.toString());
+    }
+}
+connectToURL('https://api.publicapis.org/entries');
+```
+
+#### Async/Await istifadə edərək
+
+```javascript
+const axios = require('axios');
+
+async function connectToURL(url) {
+    try {
+        const resp = await axios.get(url);
+        let listOfEntries = resp.data.entries;
+        let Categories = listOfEntries.map((entry) => entry.Category);
+        Categories = [...new Set(Categories)];
+        
+        for (let Category of Categories) {
+            if (Category.startsWith("A")) {
+                try {
+                    const resp = await axios.get(`https://api.publicapis.org/entries?Category=${Category}`);
+                    console.log(`${Category} - ${resp.data.count}`);
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+        }
+    } catch (err) {
+        console.log(err.toString());
+    }
+}
+connectToURL('https://api.publicapis.org/entries');
+```
+
+### Əsas Məqamlar
+
+- Siz yalnız `async` funksiyasında `await` istifadə edə bilərsiniz, çünki `await` ipi (thread) promise yerinə yetirilənə qədər bloklayır.
+- `Async/await` bir neçə ardıcıl olaraq yerinə yetirilməsi lazım olan asinxron əməliyyatlarla məşğul olarkən daha təmiz, oxunaqlı kod yazmağa kömək edir.
+
+----------------------------------------------------------------------
+
