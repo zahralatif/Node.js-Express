@@ -1115,3 +1115,84 @@ Bu nümunədə, `readFile` və `writeFile` promislər qaytarır. Promislər fayl
 
 ---------------------------------------------------------------------------
 
+## JSON ilə Node.js-də işləmək
+
+JSON (JavaScript Object Notation) insan üçün oxunması və yazılması asan, maşınlar üçün isə təhlil edilməsi və yaradılması asan olan yüngül məlumat mübadiləsi formatıdır. JSON veb inkişafında server və müştəri arasında məlumat mübadiləsi üçün geniş istifadə olunur.
+
+### JSON Metodları
+
+Node.js JSON məlumatları ilə işləmək üçün iki əsas metodu təmin edir:
+
+1. **JSON.parse()**: JSON sətirini JavaScript obyektinə çevirir.
+2. **JSON.stringify()**: JavaScript obyektini JSON sətirinə çevirir.
+
+### JSON-un Təhlili
+
+JSON sətirini JavaScript obyektinə təhlil etmək üçün `JSON.parse()` metodundan istifadə edə bilərsiniz. 
+```javascript
+const jsonString = '{"Company": "ABB", "Country": "AZE", "Headquarters": "28 May, Baku"}';
+const jsonObject = JSON.parse(jsonString);
+
+console.log(jsonObject);
+// Çıxış: { Company: 'ABB', Country: 'AZE', Headquarters: '28 May, Baku' }
+```
+
+### JSON-un Sətirə Çevrilməsi
+
+JavaScript obyektini JSON sətirinə çevirmək üçün `JSON.stringify()` metodundan istifadə edə bilərsiniz. Burada bir nümunə var:
+
+```javascript
+const jsonObject = {
+    Company: "ABB",
+    Country: "AZE",
+    Headquarters: "28 May, Baku"
+};
+const jsonString = JSON.stringify(jsonObject);
+
+console.log(jsonString);
+// Çıxış: {"Company":"ABB","Country":"AZE","Headquarters":"28 May, Baku"}
+```
+
+### Nümunə: API-dən JSON Məlumatların Götürülməsi
+
+JSON məlumatları qaytaran həqiqi API endpoint-dən istifadə nümunəsini görək. Hal-hazırda kosmosda olan astronavtlar haqqında məlumat verən bir API-ə HTTP sorğusu etmək üçün `axios` paketindən istifadə edəcəyik.
+
+Əvvəlcə `axios` paketini quraşdırın:
+
+```bash
+npm install axios
+```
+
+Sonra API-dən JSON məlumatları götürmək və təhlil etmək üçün aşağıdakı kodu istifadə edin:
+
+```javascript
+const axios = require('axios');
+
+const url = 'http://api.open-notify.org/astros.json';
+
+axios.get(url)
+    .then(response => {
+        const data = response.data;
+        console.log('Astronavtların sayı:', data.number);
+        console.log('Astronavtlar:', data.people);
+    })
+    .catch(error => {
+        console.error('Məlumatın götürülməsində səhv:', error);
+    });
+```
+
+Bu nümunədə:
+
+1. Biz `axios.get(url)` istifadə edərək API endpoint-nə HTTP GET sorğusu edirik.
+2. Cavab JSON məlumatları ehtiva edir və `axios` tərəfindən avtomatik olaraq təhlil edilir.
+3. Biz astronavtların sayını və astronavtların siyahısını konsola yazdırırıq.
+
+### Nəticə
+
+- JSON API məlumat mübadiləsi üçün standart formatdır və JavaScript-də təbii olaraq dəstəklənir.
+- `JSON.parse()` JSON sətirini JavaScript obyektinə çevirir.
+- `JSON.stringify()` JavaScript obyektini JSON sətirinə çevirir.
+- Node.js-də `axios` kimi kitabxanalardan istifadə edərək API-lərdən JSON məlumatları götürə və onları asanlıqla idarə edə bilərsiniz.
+
+----------------------------------------------------------------------------
+
