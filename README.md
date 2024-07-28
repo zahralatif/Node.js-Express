@@ -1196,3 +1196,30 @@ Bu nümunədə:
 
 ----------------------------------------------------------------------------
 
+## JSON və JavaScript ilə İşləmək
+
+JSON (JavaScript Object Notation) məlumat seriyalizasiyası üçün standartdır və API-lərin istehlakı və yaradılması, layihə tələblərinin təyin edilməsi və yerləşdirmələrin idarə edilməsi üçün kritikdir.
+
+### JSON haqqında Əsas Məqamlar
+
+1. **JavaScript-də JSON**:
+   - JSON JavaScript-ə daxil edilib və JavaScript obyektləri ilə işlədiyiniz zaman, əslində JSON ilə işləyirsiniz.
+   - JSON obyektləri sətir formatına kodlamaq və onları yenidən JavaScript obyektlərinə dekod etmək üçün istifadə olunur.
+
+2. **Ümumi İstifadə Halları**:
+   - **API-lər**: JSON RESTful veb xidmətlərində ünsiyyət üçün ümumi formatdır.
+   - **Konfiqurasiya**: JSON layihə tələblərini, xidmət olaraq platforma təkliflərini və Kubernetes iş yüklərini təyin etmək üçün istifadə olunur.
+   - **Verilənlər Bazaları**: JSON MongoDB kimi JSON-yönümlü sənəd verilənlər bazalarında istifadə olunur.
+
+3. **JSON ilə İşləmək üçün Metodlar**:
+   - `JSON.parse()`: JSON sətirini JavaScript obyektinə çevirir.
+   - `JSON.stringify()`: JavaScript obyektini JSON sətirinə çevirir.
+
+### JSON-un Faydaları
+
+- **Uyğunluq**: JSON çoxlu proqramlaşdırma dilləri, o cümlədən Python tərəfindən dəstəklənir və onu məlumat mübadiləsi üçün çox yönlü seçim edir.
+- **İstifadə Asanlığı**: JSON-un sadə strukturu onu oxumağı və yazmağı asanlaşdırır.
+- **Uyğunluq**: JSON müasir veb texnologiyaları tərəfindən istifadə olunur, bu da onu inkişaf etdiricilər üçün dəyərli bir bacarıq halına gətirir.
+
+----------------------------------------------------------------------------------------
+
