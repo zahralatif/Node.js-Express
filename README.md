@@ -1564,3 +1564,61 @@ newUser.save((err) => {
 
 ------------------------------------------------------------------------------
 
+## Web Frameworklərə Giriş
+
+Node.js tez-tez web framework kimi qarışdırılır, lakin əslində server tərəfində JavaScript kodunu icra edən runtime mühitdir. Bu, brauzer xaricində JavaScript tətbiqlərini işlətmək üçün zəruri infrastrukturu təmin edir, developerlərə server tərəfində tətbiqlər yaratmağa imkan verir. Bunun əksinə olaraq, veb framework veb tətbiqlərini inkişaf etdirmək üçün strukturlaşdırılmış bir yol təqdim edən alətlər və kitabxanalar toplusudur. Veb frameworklər adətən yönləndirmə (routing), middleware, verilənlər bazası qarşılıqlı əlaqəsi (database interaction) və digər komponentlər üçün funksiyalar təqdim edir.
+
+### Node.js və Web Frameworklər
+
+Node.js ilə veb tətbiqlər yaratmaq üçün developlər tez-tez əlavə alətlər və abstraksiyalar təmin edən veb frameworklərdən istifadə edirlər. Bu frameworklər əvvəlcədən təyin edilmiş strukturlar və ümumi funksionallıqlar təklif edərək inkişafı sürətləndirir və developlərə tətbiqin unikal xüsusiyyətlərinə daha çox diqqət yetirməyə imkan verir.
+
+### Arxitektura Nümunələri: MVC və REST API-ləri
+
+Veb developmentdə 2 ümumi arxitektura nümunəsi istifadə olunur: Model-View-Controller (MVC) və Representational State Transfer (REST) API-ləri. Bu nümunələr tətbiqin tələblərindən asılı olaraq birlikdə və ya ayrı-ayrılıqda istifadə edilə bilər.
+
+#### Model-View-Controller (MVC)
+
+MVC tətbiqi üç komponentə ayıran bir arxitektura nümunəsidir:
+
+1. **Model**: Tətbiqin məlumatlarını və iş məntiqini idarə edir. O, verilənlər bazası ilə qarşılıqlı əlaqədə olur və məlumat manipulyasiyasını həyata keçirir.
+2. **View**: Məlumatı istifadəçiyə təqdim etməkdən məsuldur. Model tərəfindən təmin edilən məlumatlar əsasında istifadəçi interfeysini göstərir.
+3. **Controller**: Model və view arasında vasitəçi rolunu oynayır. İstifadəçi girişlərini emal edir, modeli yeniləyir və göstəriləcək view-u müəyyən edir.
+
+MVC arxitekturasını dəstəkləyən frameworklərə aşağıdakılar daxildir:
+
+- **Express**: Veb tətbiqlər və API-lər yaratmaq üçün geniş istifadə olunan minimalist və çevik Node.js veb frameworkü. O, MVC nümunəsini dəstəkləyir və müxtəlif middleware seçimləri təklif edir.
+- **Koa**: Express-in arxasında duran komanda tərəfindən hazırlanmışdır, Koa daha kiçik və daha ifadəli olmaq üçün nəzərdə tutulmuşdur. Asinxron əməliyyatları idarə etmək üçün async funksiyalarından istifadə edir və səhv idarə edilməsinə daha müasir yanaşma təklif edir.
+- **NestJS**: Ölçeklenebilir (scalable) server tərəfli tətbiqlər yaratmaq üçün bir framework. TypeScript istifadə edir və Angular ilə yaxşı inteqrasiya olunur, onu full-stack tətbiqlər yaratmaq üçün uyğun edir. O, MVC nümunəsini izləyir və obyekt yönümlü və funksional reaktiv proqramlaşdırmanı dəstəkləyir.
+
+#### REST API-ləri
+
+REST (Representational State Transfer) şəbəkə tətbiqlərinin dizaynı üçün arxitektura üslubudur. REST API-ləri standart HTTP metodlarından istifadə edərək, GET, POST, PUT, PATCH və DELETE kimi müxtəlif veb xidmətləri arasında ünsiyyəti təmin edir. REST-in əsas prinsiplərinə daxildir:
+
+- **Statelessness**: Müştəridən serverə hər sorğu sorğunu anlamaq və emal etmək üçün lazım olan bütün məlumatları ehtiva etməlidir. Server sorğular arasında müştəri vəziyyətini saxlamır.
+- **Müştəri-Server Ayrımı (Client-Server Separation)**: Müştəri və server müstəqil fəaliyyət göstərir, müstəqil yeniləmələrə və miqyaslanmaya imkan verir.
+- **Resurs Mərkəzli (Resource-Based)**: Resurslar (məlumat obyektləri kimi) URL-lərlə təmsil olunur və bu resurslar üzərində əməliyyatlar HTTP metodlarından istifadə etməklə həyata keçirilir.
+
+### Populyar Node.js Veb Frameworkləri
+
+1. **Express.js**: 
+   - **Güclü Cəhətləri**: Geniş istifadə olunur, geniş middleware dəstəyi, sadəlik və çeviklik.
+   - **İstifadə Halları**: Veb tətbiqlər, RESTful API-lər və mikroxidmətlər.
+
+2. **Koa**:
+   - **Güclü Cəhətləri**: Müasir dizayn, async/await istifadə edir, yüngüldür.
+   - **İstifadə Halları**: Yüksək performanslı və mürəkkəb tətbiqlər.
+
+3. **Socket.io**:
+   - **Güclü Cəhətləri**: Müştərilər və serverlər arasında real-time iki istiqamətli ünsiyyət, WebSocket dəstəyi.
+   - **İstifadə Halları**: Chat tətbiqləri, canlı yeniləmələr, çox oyunçu oyunları.
+
+4. **Hapi.js**:
+   - **Güclü Cəhətləri**: Təhlükəsizlik yönümlü, zəngin plugin sistemi, konfiqurasiya yönümlü.
+   - **İstifadə Halları**: API serverləri, HTTP-proxy tətbiqləri.
+
+5. **NestJS**:
+   - **Güclü Cəhətləri**: TypeScript dəstəyi, modul arxitektura, Angular ilə inteqrasiya.
+   - **İstifadə Halları**: Müəssisə tətbiqləri, genişlənə bilən server tərəfli tətbiqlər.
+
+-------------------------------------------------------------------------------------
+
