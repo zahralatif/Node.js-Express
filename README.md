@@ -1622,3 +1622,64 @@ REST (Representational State Transfer) şəbəkə tətbiqlərinin dizaynı üç�
 
 -------------------------------------------------------------------------------------
 
+## Express Veb Tətbiq Framework-ü
+
+Express, Node.js runtime mühitinin üzərində qurulmuş populyar veb tətbiq frameworküdür. Bu, HTTP sorğularını və cavablarını idarə etməyi, middleware-ləri idarə etməyi və aşağı səviyyəli detalları abstracting edərək web inkişaf sadələşdirir. Bu abstraksiya inkişaf etdiricilərə tətbiqlərini daha səmərəli təşkil etməyə və inkişaf prosesini sürətləndirməyə imkan verir.
+
+### Express-in Əsas Xüsusiyyətləri
+
+1. **Middleware İnteqrasiyası**: Express, loglama, autentifikasiya, məlumatların parsinqi və digər tapşırıqları yerinə yetirmək üçün istifadə oluna bilən middleware paketlərini inteqrasiya etmək üçün güclü mexanizmlər təmin edir. Middleware funksiyaları hər bir gələn sorğu üçün ardıcıl olaraq icra olunur, bu da inkişaf etdiricilərə tətbiq məntiqini modullaşdırmağa və idarə etməyə imkan verir.
+
+2. **HTTP Sorğularının İdarə Edilməsi**: Express bütün HTTP metodlarını (GET, POST, PUT, DELETE və s.) dəstəkləyir və müxtəlif endpointlər üçün route handlerlərini müəyyən etmək üçün sadə sintaksis təmin edir. Bu, yaxşı müəyyən edilmiş routelar və sorğu idarəetməsi ilə API-lər və veb tətbiqlər yaratmağı asanlaşdırır.
+
+3. **Şablon Mühərrikləri və SSR (Template Engines and SSR**: Express şablonları quraraq server tərəfində render (SSR) üçün istifadə edilə bilər. Bu, SEO dostu tətbiqlər yaratmaq və ilkin səhifənin yüklənmə vaxtlarını yaxşılaşdırmaq üçün xüsusilə faydalıdır.
+
+4. **API İnkişafı**: Express adətən RESTful API-lər yaratmaq üçün istifadə olunur, burada o, məlumat qatı (data layer) ilə qarşılıqlı əlaqə üçün interfeys kimi fəaliyyət göstərir. Bu, JSON formatında məlumatı `res.json` metodu ilə müştəriyə geri göndərir, bu da API-lərin qurulmasını və istifadə edilməsini asanlaşdırır.
+
+### Express Tətbiqinin Qurulması
+
+Express tətbiqini qurmaq üçün bu beş addımı yerinə yetirin:
+
+1. **Express-i Asılılıq Kimi Elan Edin (Declare Express as a Dependency)**: Layihə qovluğunuzda `package.json` faylı yaradın və buraya Express daxil olmaqla asılılıqları əlavə edin. Bu fayl modulun metadata-sını, məsələn, ad, versiya, təsvir, əsas skript və asılılıqları (dependencies) təsvir edir.
+
+2. **npm Install Komandası İcra Edin**: `npm install` komandasından istifadə edərək elan edilmiş asılılıqları (dependencies), o cümlədən Express-i yükləyin və quraşdırın. Bu komanda `package.json` faylını oxuyur və zəruri modulları `node_modules` qovluğuna quraşdırır.
+
+3. **Express Tətbiqini İdxal Edin və Yaradın**: Əsas JavaScript faylınızda (məsələn, `app.js`) Express modulunu idxal edin və Express tətbiqi nümunəsi yaradın. Bu nümunə routelar və middleware qurmaq üçün istifadə olunacaq.
+
+4. **Route Handlers Yaradın**: Fərqli endpointlər üçün `app.get`, `app.post` və s. kimi metodlardan istifadə edərək route handlers təyin edin. Hər bir route handler müəyyən bir endpointə sorğu göndərildikdə yerinə yetiriləcək məntiqi müəyyən edir.
+
+5. **HTTP Serveri Başladın**: Müəyyən edilmiş port nömrəsi ilə `app.listen` metodunu çağıraraq serveri başladın. Bu metod verilmiş portda əlaqələri bağlayır və dinləyir, serverin sorğuları qəbul etməyə başlamasına imkan verir.
+
+### Nümunə Quraşdırma
+
+```json
+// package.json
+{
+  "name": "temperature",
+  "version": "1.0.0",
+  "description": "Amerika Birləşmiş Ştatlarında mövcud hava şəraitini əldə edin.",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.0.0"
+  }
+}
+```
+
+```javascript
+// app.js
+const express = require('express');
+const app = express();
+
+// Əsas ana səhifə üçün marşrut işləyicisi təyin edin
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+// Serveri 3000 portunda başladın
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
+});
+```
+
+----------------------------------------------------------------------------
+
