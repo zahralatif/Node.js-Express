@@ -1757,3 +1757,40 @@ Veb brauzerinizi açın və `http://localhost:8080/temperature/some_location_cod
 
 ----------------------------------------------------------------
 
+## Express və Back-end JavaScript Frameworkləri ilə İşləmək
+
+**Express framework-ü** Node.js üçün geniş yayılmış bir seçimdir və back-end veb tətbiqləri yaratmaq üçün effektivdir. Onun sintaksisi və yüksək səviyyəli API dizaynı, **REST API endpointləri** yaratmaq üçün xüsusi ilə faydalıdır. Bu frameworkün populyarlığı və güclü icması sayəsində müxtəlif middleware-lər inkişaf etdirilib və bunlar aşağıdakı kimi tapşırıqları sadələşdirir:
+
+- **Body məzmununun parse edilməsi**: `body-parser` kimi middleware JSON və URL-encoded məlumatların asanlıqla parse edilməsinə imkan yaradır.
+- **Autentifikasiya**: `passport` kimi middleware müxtəlif autentifikasiya strategiyalarını dəstəkləyir.
+- **İstifadəçi sessiyalarının idarə edilməsi**: `express-session` kimi middleware sessiya məlumatlarını idarə edir.
+- **Sorğu loglarının aparılması**: `morgan` HTTP sorğularını log etmək üçün geniş yayılmış middleware-dir.
+
+### Express-in Əsas Üstünlükləri
+
+1. **Populyarlıq və Ekosistem**: Express Node.js üçün ən populyar frameworklərdən biridir. Bu populyarlıq, çoxlu sayda paket və middleware ilə zəngin ekosistemin inkişafına kömək edib ki, bu da inkişafı sürətləndirir.
+
+2. **Middleware çevikliyi**: Express-də middleware nümunəsi tərtibatçılara sorğu və cavabları incə detallarla idarə etməyə imkan verir. Bu çeviklik, sorğu-cavab dövriyyəsinin müxtəlif nöqtələrində xüsusi məntiq və ya transformasiyaların tətbiq olunmasını mümkün edir.
+
+3. **Sürət və istifadənin asanlığı**: Express sadəliyi və sürəti ilə tanınır. Tərtibatçılar sürətlə server qurub inkişaf etməyə başlaya bilərlər ki, bu da həm prototipləşdirmə, həm də istehsal mühitləri üçün idealdır.
+
+4. **Aşağı səviyyəli kodun abstraksiyası**: Express istifadə edərək, tərtibatçılar HTTP sorğu və cavablarının işlənməsi üçün təkrarlanan kod yazmaqdan qaça bilərlər. Bunun əvəzinə, onlar tətbiq məntiqi və iş qaydalarına diqqət yetirə bilərlər.
+
+5. **Ən yaxşı təcrübələr**: Express sənaye standartlarına uyğun olaraq hazırlanmışdır və təhlükəsiz və saxlanıla bilən tətbiqlərin qurulması üçün etibarlı əsas təmin edir.
+
+6. **Miqyaslama qabiliyyəti**: Express miqyaslana bilən tətbiqlərin inkişafını dəstəkləyir. Həm front, həm də back tərəfdə JavaScript istifadə etməklə, tərtibatçılar istər front, istərsə də back tərəfdə eyni kodu istifadə edə bilərlər.
+
+7. **Performans**: Google V8 mühərrikindən istifadə edərək, Express minimal gecikmə ilə yüksək performans təmin edə bilər və səmərəli icra və cavab vaxtlarını dəstəkləyir.
+
+8. **Keşləşdirmə**: Express, keşləşdirmə dəstəyi ilə veb tətbiqlərin performansını artırır və hər sorğu üçün kodu yenidən icra etməyə ehtiyacı azaldır.
+
+9. **Üçüncü tərəf tətbiqləri ilə inteqrasiya**: Express müxtəlif üçüncü tərəf tətbiqləri və xidmətləri ilə asanlıqla inteqrasiya edir və bu da onun funksionallığını və çevikliyini artırır.
+
+### Praktiki İstifadə və Öyrənmə Döngüsü
+
+Bir çox tərtibatçı, xüsusən back-end developmentə yeni başlayanlar, Express-in sadəliyi və mövcud geniş sənədlər və resurslar sayəsində əlçatan olduğunu düşünür. Daha çox infrastruktura dair məsələləri həll edən idarə olunan bulud xidmətlərini üstün tutan bəzi tərtibatçılar olsa da, Express back-end memarlığı üzərində daha çox nəzarət etmək istəyənlər üçün əla seçim olaraq qalır.
+
+Ümumiyyətlə, **Express.js** Node.js ekosistemində back-end inkişafı üçün güclü bir vasitədir. O, sadəliyi və çevikliyi birləşdirərək tərtibatçılara möhkəm və miqyaslana bilən tətbiqlər yaratmağa imkan verir. İstər API-lər, istərsə də veb tətbiqləri yaradırsınızsa, ya da digər xidmətlər ilə inteqrasiya edirsinizsə, Express bu işi səmərəli şəkildə yerinə yetirmək üçün möhkəm bir əsas təmin edir.
+
+----------------------------------------------------------------------
+
