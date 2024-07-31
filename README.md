@@ -1794,3 +1794,47 @@ Bir çox tərtibatçı, xüsusən back-end developmentə yeni başlayanlar, Expr
 
 ----------------------------------------------------------------------
 
+## Middleware və Routerlərə Giriş
+
+**Middleware** paylanmış sistemdə müxtəlif komponentlər arasında əlaqə və məlumat idarəçiliyini təmin edən vasitəçi proqram təminatıdır. Bu, tətbiqlər, məlumat bazaları və xidmətlər arasında qarşılıqlı əlaqələri asanlaşdırır, istifadəçilər üçün problemsiz bir təcrübə təmin edir.
+
+### Express-də Middleware
+
+**Express** Node.js üçün populyar bir veb tətbiq frameworküdür və onun güclü yönləndirmə imkanları və middleware dəstəyi ilə tanınır. Express-də middleware funksiyaları HTTP sorğularını idarə etmək, məlumatları işləmək və cavablar yaratmaq üçün nəzərdə tutulub. Tətbiqin memarlığının mühüm bir hissəsini təşkil edir, modulyar və təkrar istifadə edilə bilən kod yaratmağa imkan verir.
+
+**Middleware-in Əsas Xüsusiyyətləri:**
+1. **Məlumatın İdarə Edilməsi**: Middleware sorğu məlumatlarını işləyə bilər, məsələn, JSON bodylərini parse etmək və ya forma göndərişlərini idarə etmək.
+2. **Sorğu/Cavab İdarəçiliyi**: Sorğu və cavabları idarə edə bilər, loglama, autentifikasiya, səhvlərin idarə edilməsi və daha çox şey daxildir.
+3. **Yönləndirmə**: Middleware, URL və HTTP metodu əsasında sorğuları müvafiq idarəedici funksiyalara yönləndirə bilər.
+
+### Mesajlaşma Frameworkləri və Məlumat Formatları
+
+Express və oxşar frameworklərdə front və back tərəf arasında ünsiyyət əsasən **JSON** və **REST API-lər** vasitəsilə aparılır. Bu, məlumat mübadiləsi üçün standart format və metod təmin edir, fərqli sistemlərin qarşılıqlı əlaqəsini asanlaşdırır. Daha köhnə çərçivələr oxşar məqsədlər üçün XML və SOAP-dan istifadə edə bilər.
+
+**Veb Xidmətləri və API-lər**: Veb xidmətlər, o cümlədən REST API-lər, internet üzərindən tətbiqlərin ünsiyyəti üçün standart bir yol təmin edir. Bu xidmətlər HTTP metodlarından (məsələn, GET, POST, PUT, DELETE) istifadə edərək resurslarla qarşılıqlı əlaqə yaradır.
+
+### Veb Serverlər və Yönləndirmə
+
+**Veb server** middleware rolunda çıxış edir, veb saytı məlumat bazasına bağlayır. Biznes məntiqini idarə edir, sorğuları işləyir və məlumatları uyğun şəkildə yönləndirir. **Yönləndirmə** gələn HTTP sorğularının, sorğunun URL-si və metoduna əsaslanaraq spesifik idarəedici funksiyalara xəritələnməsi prosesidir.
+
+**Yönləndirmə Funksiyaları**:
+- **Router.get()**: Məlumatları əldə etmək üçün HTTP GET sorğularını idarə edir.
+- **Router.post()**: Yeni məlumatlar yaratmaq üçün HTTP POST sorğularını idarə edir.
+- **Router.put()**: Mövcud məlumatları yeniləmək üçün HTTP PUT sorğularını idarə edir.
+- **Router.delete()**: Məlumatları silmək üçün HTTP DELETE sorğularını idarə edir.
+
+Bu router funksiyaları Express **Router sinfinin** bir hissəsidir və tətbiqdə routerları müəyyən etmək üçün istifadə olunur. Onlar iki əsas arqumenti qəbul edirlər:
+1. **URL Yol**: Sorğunun yönləndirildiyi son nöqtə.
+2. **Geri Çağırış Funksiyası**: Sorğunu idarə edən və cavab yaradan funksiya.
+
+### Əlavə Middleware Funksiyaları
+
+Yönləndirmədən əlavə, middleware müxtəlif digər vəzifələri yerinə yetirə bilər:
+- **Təhlükəsizlik**: Təhlükəsiz ünsiyyəti təmin etmək üçün məlumatların şifrələnməsi və şifrəsinin açılması.
+- **Yük İdarəçiliyi (Load Management)**: Yükü balanslaşdırmaq və performansı artırmaq üçün gələn trafikin bir neçə server arasında paylanması.
+- **Məlumatın İdarə Edilməsi**: Məlumatların müştəriyə qaytarılmadan əvvəl filtrasiya, sıralama və ya dəyişdirilməsi.
+
+Express-də middleware, tətbiqlərin qurulması üçün modulyar yanaşma təmin edir və tərtibatçılara təmiz, saxlanıla bilən və təkrar istifadə edilə bilən kod yaratmağa imkan verir. Bu, tətbiqin iş prosesinin müxtəlif aspektlərini, sadə məlumat parse edilməsindən mürəkkəb təhlükəsizlik tədbirlərinə qədər, idarə etmək üçün çeviklik təmin edir.
+
+-------------------------------------------------------------------------
+
