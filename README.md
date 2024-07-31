@@ -1838,3 +1838,89 @@ Express-də middleware, tətbiqlərin qurulması üçün modulyar yanaşma təmi
 
 -------------------------------------------------------------------------
 
+## Routing, Middleware və Şablonlar
+
+### Express-də Routing
+
+Routing, serverin müxtəlif routelara və HTTP metodlarına (GET, POST, PUT, DELETE) gələn sorğuları effektiv şəkildə idarə etməsinə imkan verən əsas aspektdir. Server hər bir sorğunu düzgün şəkildə emal etməli və ya lazım olduqda uyğun xəta mesajları qaytarmalıdır. Express-də routing iki səviyyədə idarə oluna bilər:
+
+1. **Tətbiq səviyyəli routing**: Bu, tətbiq daxilində birbaşa hər bir route-u və HTTP metodunu idarə etməkdir. Bu yanaşma az sayda endpointlər üçün sadədir, lakin routeların sayı artdıqca daha çətin olur. Məsələn:
+   ```javascript
+   app.get('/user/about/:id', (req, res) => { /* GET sorğusunu idarə et */ });
+   app.post('/user/about/:id', (req, res) => { /* POST sorğusunu idarə et */ });
+   app.get('/item/about/:id', (req, res) => { /* GET sorğusunu idarə et */ });
+   app.post('/item/about/:id', (req, res) => { /* POST sorğusunu idarə et */ });
+   ```
+
+2. **Router səviyyəli routing**: Bu metod `express.Router()` sinifindən istifadə edərək modulyar route idarəediciləri yaratmaqdır. Bu, xüsusən çoxsaylı routelara malik tətbiqlər üçün daha idarəediləbilən və təşkilatlanmışdır. Məsələn:
+   ```javascript
+   const itemRouter = express.Router();
+   const userRouter = express.Router();
+
+   itemRouter.get('/about', (req, res) => { /* item haqqında */ });
+   itemRouter.get('/detail', (req, res) => { /* item detal */ });
+
+   userRouter.get('/about', (req, res) => { /* user haqqında */ });
+   userRouter.get('/detail', (req, res) => { /* user detal */ });
+
+   app.use('/item', itemRouter);
+   app.use('/user', userRouter);
+   ```
+
+### Middleware
+
+Express-də middleware funksiyaları, tətbiqin sorğu-cavab dövründə sorğu (`req`), cavab (`res`) və növbəti funksiyaya (`next`) giriş əldə edən funksiyalardır. Middleware, sorğu və cavab obyektlərini dəyişdirə, sorğu-cavab dövrünü sonlandıra və növbəti middleware funksiyasını çağıra bilər.
+
+**Middleware Növləri:**
+1. **Tətbiq səviyyəli Middleware**: Bu middleware `app.use()` ilə tətbiq instansiyasına bağlanır. Autentifikasiya, loglama və sessiya idarəçiliyi kimi tapşırıqlar üçün istifadə edilə bilər. Məsələn:
+   ```javascript
+   app.use((req, res, next) => {
+     if (req.headers['password'] === 'pwd123') {
+       console.log('Giriş icazə verildi:', new Date());
+       next();
+     } else {
+       res.status(403).send('Qadağan edildi');
+     }
+   });
+   ```
+
+2. **Router səviyyəli Middleware**: Bu middleware xüsusi bir router instansiyası üçün tətbiq edilir. Beləliklə, yalnız müəyyən routelar üçün middleware tətbiq edə bilərsiniz. Məsələn:
+   ```javascript
+   userRouter.use((req, res, next) => {
+     console.log('User route girişi');
+     next();
+   });
+   ```
+
+3. **Xəta İdarəetmə Middleware**: Bu middleware tətbiqdəki səhvləri idarə edir. Bu, dörd arqument tələb edir: xəta, sorğu, cavab və növbəti. `next` istifadə edilməsə belə, metod imzasında daxil edilməlidir. Məsələn:
+   ```javascript
+   app.use((err, req, res, next) => {
+     console.error(err.stack);
+     res.status(500).send('Nəsə səhv oldu!');
+   });
+   ```
+
+4. **Daxili Middleware**: Express, statik faylları xidmət etmək üçün `express.static`, JSON yüklərini parse etmək üçün `express.json` və daha çox şey kimi daxili middleware funksiyalarına malikdir.
+
+5. **Üçüncü Tərəf Middleware**: Bunlar icma tərəfindən təqdim edilən middleware funksiyalarıdır və npm vasitəsilə quraşdırıla bilər. Məsələn, sorğu bodylərini parse etmək üçün `body-parser`.
+
+### Şablonlar (Templating)
+
+Şablonların render edilməsi, serverə məlumatlara əsaslanan HTML məzmununu dinamik şəkildə yaratmağa imkan verir. Express müxtəlif şablon mühərriklərindən istifadə edərək görünüşləri render edə bilər. Bu misalda, `express-react-views` paketi serverdə React komponentlərini render etmək üçün istifadə olunur:
+
+```javascript
+app.set('views', path.join(__dirname, 'myviews'));
+app.set('view engine', 'jsx');
+app.engine('jsx', require('express-react-views').createEngine());
+
+app.get('/', (req, res) => {
+  res.render('index', { name: 'User' });
+});
+```
+
+Burada, `views` qovluğunda JSX faylları var ki, bu fayllar HTML strukturunu müəyyən edir və server göstərilən məlumatlara əsaslanaraq tam HTML səhifələrinə render edir.
+
+Nəticə olaraq, **routing**, **middleware** və **şablonlar** Express tətbiqinin əsas komponentləridir, sorğuları idarə etməyə, məlumatları emal etməyə, cavabları idarə etməyə və dinamik məzmunu səmərəli şəkildə göstərməyə imkan verir.
+
+------------------------------------------------------------------------
+
