@@ -1683,3 +1683,77 @@ app.listen(3000, () => {
 
 ----------------------------------------------------------------------------
 
+## İlk Express Veb Tətbiqiniz
+
+### 1. Express-i Asılılıq Kimi Elan Edin (Declare Express as a Dependency
+İlk olaraq, layihənizin `package.json` faylında Express-i asılılıq kimi elan etməlisiniz. Bu fayl layihənin asılılıqlarını və metadata-sını idarə edir. Əgər `package.json` faylınız yoxdursa, layihə qovluğunuzda aşağıdakı əmr vasitəsilə birini yarada bilərsiniz:
+
+```sh
+npm init -y
+```
+
+Daha sonra, Express-i asılılıq kimi əlavə edin:
+
+```json
+{
+  "name": "my-express-app",
+  "version": "1.0.0",
+  "description": "Sadə bir Express veb tətbiqi",
+  "main": "mynodeserver.js",
+  "dependencies": {
+    "express": "^4.0.0"
+  }
+}
+```
+
+### 2. Asılılıqları Quraşdırın (Install Dependencies)
+`package.json` faylında qeyd olunan Express modulu və digər asılılıqları quraşdırmaq üçün aşağıdakı əmri icra edin:
+
+```sh
+npm install
+```
+
+Bu, `node_modules` adlı bir qovluq yaradacaq və Express və onun asılılıqlarını bu qovluğa quraşdıracaq.
+
+### 3. Express Modulunu İdxal Edin və Express Tətbiqi Yaradın (Import the Express Module and Create an Express Application)
+Layihə qovluğunuzda `mynodeserver.js` kimi yeni bir JavaScript faylı yaradın. Bu faylda Express-i idxal edin və Express tətbiqi nümunəsi yaradın:
+
+```javascript
+// mynodeserver.js
+const express = require('express');
+const app = express();
+```
+
+### 4. Route Handler Yaradın (Create a Route Handler)
+Gələn HTTP sorğularını idarə etmək üçün route handlerləri qurun. Bu nümunədə, hava məlumatını əldə etmək üçün bir route yaradacağıq. İşləyici URL-dən yer kodunu çıxaracaq və bir mesajla cavab verəcək:
+
+```javascript
+app.get('/temperature/:location_code', (req, res) => {
+  const location = req.params.location_code;
+  // Hava məlumatını əldə etməyi simulyasiya edin
+  res.send(`Verilmiş yer üçün mövcud hava şəraiti: ${location}`);
+});
+```
+
+Bu marşrutda, `:location_code` bir route parametridir və `req.params.location_code` vasitəsilə əldə edilə bilər.
+
+### 5. HTTP Serverini Başladın (Start an HTTP Server)
+Nəhayət, serveri müəyyən bir portda dinləyərək başladın. Burada biz 8080 portundan istifadə edirik:
+
+```javascript
+app.listen(8080, () => {
+  console.log('Server işə düşdü: http://localhost:8080');
+});
+```
+
+### Tətbiqi İşlətmək (Running the Application)
+Express tətbiqinizi başlatmaq üçün terminalda aşağıdakı əmri icra edin:
+
+```sh
+node mynodeserver.js
+```
+
+Veb brauzerinizi açın və `http://localhost:8080/temperature/some_location_code` ünvanına keçin (burada `some_location_code` əvəzinə hər hansı bir mətn yerləşdirin). Siz verilmiş yer kodu üçün hava şəraitini göstərən bir mesaj görməlisiniz.
+
+----------------------------------------------------------------
+
