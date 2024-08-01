@@ -2089,3 +2089,69 @@ app.listen(5000, () => {
 
 -----------------------------------------------------------------
 
+## HTTP Metodları və REST API-ləri
+
+### Ümumi Baxış
+
+İnternet müştəri-server arxitekturasında fəaliyyət göstərir. Müştərilər, son istifadəçilər tərəfindən istifadə olunan interfeyslərdir, serverlər isə biznes məntiqi, məlumat və funksionallığı təmin edən xidmətləri yerləşdirir. Müştərilər və serverlər arasında ünsiyyət Hypertext Transfer Protocol (HTTP) vasitəsilə baş verir və bu mübadilə çox vaxt Application Programming Interfaces (APIs) vasitəsilə həyata keçirilir. 2000-ci ildə bu API-lərin yaradılması üçün REST (Representational State Transfer) adlanan bir sıra qaydalar müəyyən edilmişdir.
+
+### Əsas Anlayışlar
+
+- **Xidmət**: Tətbiq daxilində müəyyən məqsədi yerinə yetirən proqram komponenti, adətən giriş qəbul edir və çıxış təmin edir.
+- **HTTP**: Müştərilər və serverlər arasında məlumat mübadiləsi üçün istifadə edilən protokol.
+- **API**: Proqram komponentləri arasında ünsiyyət üçün təriflər və protokollar toplusu.
+- **REST**: Resursları standart şəkildə müəyyən etmək və idarə etmək üçün API-lərin yaradılması üçün arxitektura qaydaları.
+- **Resurs**: RESTful API-də əsas anlayış, verilənlər və metodlarla əlaqəli obyektləri təmsil edir.
+
+### HTTP Metodları
+
+REST API-lərində istifadə olunan ümumi HTTP metodları:
+
+1. **GET**: Resursun təmsilini əldə edir. Resursu dəyişdirməməlidir.
+2. **POST**: Serverə məlumat göndərərək yeni resurs yaradır. Adətən `201 CREATED` status kodu qaytarır.
+3. **PUT**: Mövcud resursu yeniləyir və ya dəyişdirir. PUT bir neçə dəfə çağırılsa belə nəticə dəyişməz (idempotentdir).
+4. **DELETE**: Resursu silir. Uğurlu olarsa, `204 NO CONTENT` qaytarmalıdır.
+5. **PATCH**: Resursa qismən dəyişikliklər tətbiq edir.
+
+### REST API Komponentləri
+
+- **Sorğu Obyekti**: URL, sorğu başlığı və sorğu body-sini ehtiva edir. URL protokol, host adı, path və sorğu sətirindən ibarətdir.
+- **Cavab Obyekti**: Cavab başlığı, body və status kodunu ehtiva edir, çox vaxt məlumatları JSON formatında təqdim edir.
+
+### HTTP Status Kodları
+
+- **200-299**: Uğur (məs., `200 OK`, `201 CREATED`)
+- **300-399**: Yönləndirmə (məs., `301 MOVED PERMANENTLY`)
+- **400-499**: Müştəri tərəfi səhvi (məs., `400 BAD REQUEST`, `404 NOT FOUND`)
+- **500-599**: Server tərəfi səhvi (məs., `500 INTERNAL SERVER ERROR`)
+
+### REST API Dizayn Qaydaları
+
+1. **Resurs-Əsaslı**: API-lər resurslar ətrafında təşkil edilməlidir, hərəkətlər ətrafında deyil.
+2. **Stateless**: Müştəri tərəfindən serverə göndərilən hər bir sorğu tələbini başa düşmək və işləmək üçün lazım olan bütün məlumatları ehtiva etməlidir.
+3. **Keşləndirilə bilən**: Cavablar özlərini keşləndirilə bilən və ya olmamaq kimi müəyyən etməlidir ki, performans yaxşılaşdırılsın.
+4. **Birləşik İnterfeys (Uniform Interface)**: İnterfeys uyğun olmalı, müştəri-server qarşılıqlı əlaqələrini məlumat təqdimatından ayırmalıdır.
+5. **Layihəli Sistem (Layered System)**: API-lər orta laylar (məsələn, middleware) vasitəsilə işləyəcək şəkildə dizayn edilə bilər, müştəri və ya server bu aralıq laylar haqqında məlumatlı olmadan.
+
+### URL Dizaynı
+
+- Hierarxik əlaqələri göstərmək üçün slashes (`/`) istifadə edin.
+- Son slashes-lərdən çəkinin.
+- Oxunabilirlik üçün tire (`-`) istifadə edin, alt xəttlərdən (`_`) çəkinin.
+- Kiçik hərflərdən istifadə edin.
+- URL-lərdə nöqtələrdən (`.`) çəkinin.
+- Lazım olduqda tabe resurslar və ID-ləri URL-də daxil edin.
+
+### RESTful və RESTful Olmayan Nümunələr
+
+- **RESTful Olmayan**: `GET http://api.myapp.com/getUser/123`
+- **RESTful**: `GET http://api.myapp.com/users/123`
+
+### Əsas Terminologiya
+
+- **URL Path Parametri**: URL pathində dəyişən.
+- **URL Sorğu Parametri**: `?` işarəsindən sonra gələn və `&` ilə ayrılan açar-dəyər cütləri.
+- **Başlıq Parametri**: Sorğu və ya cavab haqqında metadata.
+
+--------------------------------------------------------
+
