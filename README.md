@@ -2155,3 +2155,61 @@ REST API-lərində istifadə olunan ümumi HTTP metodları:
 
 --------------------------------------------------------
 
+## Express Best Practices 
+
+### Qovluq Strukturu
+
+Express xüsusi bir qovluq strukturu tələb etməsə də, layihənizin böyüdükcə idarə oluna bilənliyi üçün onu təşkil etmək vacibdir. Aşağıdakı qovluqlar geniş yayılmışdır:
+
+- **node_modules**: Proqramın modulları və paketlərini ehtiva edir, `npm install` əmri ilə avtomatik olaraq yaradılır.
+- **config**: Verilənlər bazası bağlantıları, mühit dəyişənləri və API açarları kimi konfiqurasiya fayllarını saxlayır.
+- **models**: Proqram üçün verilənlər modellərini ehtiva edir, tez-tez Object-Relational Mapping (ORM) kitabxanası ilə müəyyən edilir.
+- **routes**: Fərqli obyektlər üçün bütün routeları təyin edir, adətən hər məntiqi route dəsti üçün bir fayl.
+- **views**: Dinamik olaraq HTML, CSS və JavaScript yaratmaq üçün şablon fayllarını saxlayır.
+- **public**: Şəkillər, CSS və JavaScript kimi statik məzmunu ehtiva edir, adətən hər məzmun növü üçün alt qovluqlara təşkil olunur.
+
+Əsas fayllar aşağıdakılardır:
+
+- **app.js**: Proqramın əsas konfiqurasiya faylı.
+- **routes.js**: Route təyinatlarını mərkəzləşdirir və routes qovluğundan faylları tələb edir/idxal edir və onları `app.js` üçün bir modul olaraq ixrac edir.
+- **package.json**: Layihə metadataları və asılılıqları idarə edir.
+
+### API İnkişafı 
+
+1. **Resurs-Əsaslı Routelar**: Routelarda resurs identifikatorları olaraq isimlərdən istifadə edin. Məsələn:
+   - `POST /employees` işçi yaratmaq üçün.
+   - `GET /employees/:id` işçini əldə etmək üçün.
+   - `PATCH /employees/:id` işçini yeniləmək üçün.
+   - `DELETE /employees/:id` işçini silmək üçün.
+
+2. **HTTP Status Kodları**: Uyğun status kodlarından istifadə edin:
+   - **2xx**: Uğur (məs., `200 OK`, `201 CREATED`)
+   - **3xx**: Yönləndirmə (məs., `301 MOVED PERMANENTLY`)
+   - **4xx**: Müştəri tərəfi səhvi (məs., `400 BAD REQUEST`, `404 NOT FOUND`)
+   - **5xx**: Server tərəfi səhvi (məs., `500 INTERNAL SERVER ERROR`)
+
+3. **Testləşdirmə**: REST API-lər üçün black-box testi istifadə edin. Mocha və SuperTest kimi vasitələr HTTP sorğularını kodun daxili strukturasına baxmadan test edə bilər.
+
+4. **Təsdiqləmə**: JSON Web Tokens (JWT) istifadə edərək, müştəri tərəfində saxlanılan sessiya məlumatları ilə vəziyyətsiz təsdiqləmə təmin edin.
+
+5. **Sənədləşdirmə**: Düzgün API sənədləşdirilməsi vacibdir. API Blueprint və Swagger kimi vasitələr dəqiq və əlçatan sənədlər yaratmağa kömək edə bilər.
+
+### Əlavə Məsləhətlər
+
+- **NPM**:
+  - Node.js layihəsini başlatmaq üçün `npm init` və ya `npm init -y` istifadə edin.
+  - Asılılıqları idarə etmək üçün `npm install --save` və ya `npm install --save-dev` istifadə edin.
+  - Heç vaxt `node_modules` qovluğunu repozitoriyaya göndərməyin ; əvəzinə asılılıqları quraşdırmaq üçün `npm install` istifadə edin.
+
+- **Böyük-kiçik hərf Konvensiyaları**:
+  - Fayl adları üçün kiçik hərflərdən istifadə edin.
+  - Dəyişən adları üçün camelCase istifadə edin.
+  - Npm modullarını kiçik hərflərdə, tirelərlə ayrılmış şəkildə adlandırın (məs., `express-session`).
+  - Npm modullarını tələb edərkən camelCase istifadə edin.
+
+- **Konfiqurasiya və Routelar**:
+  - Dəyişənləri konfiqurasiya fayllarında saxlayın.
+  - Oxşar routeları daha yaxşı təşkilatçılıq və idarə oluna bilənlik üçün ayrı fayllara qruplaşdırın.
+
+------------------------------------------------------------------
+
