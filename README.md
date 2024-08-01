@@ -1990,3 +1990,102 @@ Parolsuz autentifikasiya parollardan fərqli faktorlarla şəxsiyyəti təsdiq e
 
 ----------------------------------------------------------------
 
+## Node.js-də Autentifikasiya
+
+Autentifikasiya istifadəçinin şəxsiyyətini təsdiqləmək prosesidir. Bu, istifadəçinin kim olduğunu müəyyən edir və onların şəxsiyyətinə əsasən hansı resurslara daxil ola biləcəklərini göstərir. Node.js-də əsasən üç əsas autentifikasiya yanaşması istifadə olunur: sessiyaya əsaslanan, tokenə əsaslanan və parolsuz autentifikasiya. Bu yanaşmalar arasında **tokenə əsaslanan autentifikasiya** genişlənəbilənlik, elastiklik və təhlükəsizlik xüsusiyyətlərinə görə ən populyardır.
+
+### Tokenə Əsaslanan Autentifikasiya
+
+Tokenə əsaslanan autentifikasiya prosesi belədir:
+
+1. **İstifadəçi Girişi**:
+   - İstifadəçi öz istifadəçi adı və şifrəsini serverə göndərir.
+   - Server bu məlumatları, adətən, verilənlər bazasına qarşı yoxlayır.
+
+2. **Tokenin Yaradılması**:
+   - Uğurlu təsdiqdən sonra, server istifadəçi məlumatlarını və iddialarını ehtiva edən token, adətən JSON Web Token (JWT), yaradır.
+   - Token müştəriyə göndərilir və müştəri tərəfindən local storage və ya cookie-də saxlanıla bilər.
+
+3. **Tokenin İstifadəsi**:
+   - Sonrakı sorğular üçün müştəri tokeni avtorizasiya başlığında göndərir.
+   - Server tokeni yoxlayır və istifadəçini autentifikasiyadan keçirir, resurslara daxil olma hüququ verir.
+
+#### Tokenə Əsaslanan Autentifikasiyanın Üstünlükləri
+
+- **Genişlənəbilənlik (Scalability)**: Tokenlər müştəri tərəfdə saxlanılır, bu da server yüklənməsini azaldır və tətbiqlərin genişləndirilməsini asanlaşdırır.
+- **Elastiklik**: Tokenlər müxtəlif serverlər və tətbiqlər arasında istifadə edilə bilər, vahid autentifikasiya prosesini təmin edir.
+- **Təhlükəsizlik**: JWT-lər imzalanıb şifrələnə bilər, bu da manipulyasiyanın qarşısını alır və xüsusi şifrələmə açarı olmadan icazəsiz oxunmanın qarşısını alır.
+
+### Express.js API Serverinin Qurulması
+
+Tokenə əsaslanan autentifikasiya nümunəsini göstərmək üçün istifadəçi autentifikasiyasına əsasən işçi məlumatlarına çıxış təmin edən Express.js API serveri yaradacağıq. Tətbiq iki əsas API-yə malik olacaq:
+
+1. **POST API**: Giriş etmək və token almaq üçün istifadə olunur.
+2. **GET API**: Yalnız autentifikasiyadan keçmiş istifadəçilərə giriş icazəsi verilən işçi məlumatlarına çıxış üçün istifadə olunur.
+
+#### Nümunə Kod
+
+**Serverin Qurulması**:
+```javascript
+const express = require('express');
+const jwt = require('jsonwebtoken');
+const bodyParser = require('body-parser');
+
+const app = express();
+const JWT_SECRET = 'your_jwt_secret_key'; // Təhlükəsiz açarla əvəz edin
+
+app.use(bodyParser.json());
+```
+
+**Giriş Endpointi** (`signin`):
+```javascript
+app.post('/signin', (req, res) => {
+  const { username, password } = req.body;
+  // Real tətbiqdə, istifadəçi verilənlər bazasından götürüləcək
+  if (username === 'user' && password === 'password') {
+    const token = jwt.sign({ username }, JWT_SECRET);
+    res.json({ token });
+  } else {
+    res.status(401).json({ message: 'Yanlış istifadəçi adı və/və ya şifrə' });
+  }
+});
+```
+
+**Qorunan Endpoint** (`/employees`):
+```javascript
+app.get('/employees', (req, res) => {
+  const token = req.headers['authorization'];
+  if (!token) {
+    return res.status(401).json({ message: 'Token yoxdur' });
+  }
+
+  try {
+    const decoded = jwt.verify(token.split(' ')[1], JWT_SECRET);
+    // İstifadəçi icazələrini yoxlayın və müvafiq cavab verin
+    res.json({ message: 'İşçi Endpointinə giriş müvəffəqiyyətli oldu' });
+  } catch (error) {
+    res.status(401).json({ message: 'Bu resursa giriş üçün daxil olun' });
+  }
+});
+```
+
+**Server Dinləyicisi**:
+```javascript
+app.listen(5000, () => {
+  console.log('API Server http://localhost:5000 ünvanında işləyir');
+});
+```
+
+### Əsas Nöqtələr
+
+- **Tokenə Əsaslanan Autentifikasiyanın Üstünlükləri**:
+  - **Genişlənəbilənlik**: Tokenlər müştəri tərəfdə idarə olunur, bu da server yüklənməsini azaldır.
+  - **Elastiklik**: Tokenlər müxtəlif serverlər və tətbiqlər arasında istifadə edilə bilər.
+  - **Təhlükəsizlik**: JWT-lər imzalanıb şifrələnə bilər, təhlükəsiz ünsiyyəti təmin edir.
+
+- **API Endpointləri**:
+  - **POST API** (`/signin`): İstifadəçi autentifikasiyası və tokenin yaradılması üçün istifadə olunur.
+  - **GET API** (`/employees`): Tokenlə təsdiqlənmiş istifadəçilər üçün qorunan resurslara çıxış imkanı verir.
+
+-----------------------------------------------------------------
+
