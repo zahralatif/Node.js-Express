@@ -1924,3 +1924,69 @@ Nəticə olaraq, **routing**, **middleware** və **şablonlar** Express tətbiqi
 
 ------------------------------------------------------------------------
 
+## Autentifikasiya və Avtorizasiya
+
+Autentifikasiya və avtorizasiya veb tətbiqlərinin təhlükəsizliyində vacib rol oynayır. Autentifikasiya istifadəçinin şəxsiyyətini təsdiqləyir, avtorizasiya isə onların giriş səviyyələrini müəyyən edir. Aşağıda, Node.js-də geniş istifadə olunan üç autentifikasiya üsulu haqqında danışırıq: sessiyaya əsaslanan, tokenə əsaslanan və parolsuz autentifikasiya.
+
+### Sessiyaya Əsaslanan Autentifikasiya
+
+Sessiyaya əsaslanan autentifikasiya serverin istifadəçi sessiyalarını idarə etməsini nəzərdə tutur. Proses aşağıdakı kimidir:
+
+1. **Giriş**: İstifadəçi öz giriş məlumatlarını təqdim edir.
+2. **Təsdiq**: Server bu məlumatları verilənlər bazası ilə müqayisə edərək yoxlayır.
+3. **Sessiyanın Yaradılması**: Uğurlu təsdiqdən sonra, server bir sessiya yaradır və unikal sessiya identifikatoru (ID) təyin edir; bu identifikator verilənlər bazasında saxlanılır.
+4. **Sessiya ID-nin Saxlanması**: Sessiya ID istifadəçinin brauzerində cookie olaraq saxlanılır.
+5. **Sessiyanın İdarə Edilməsi**: Sessiya ID növbəti sorğuları təsdiqləmək üçün istifadə olunur və istifadəçi çıxış etdikdə və ya sessiya müddəti bitdikdə silinir.
+
+### Tokenə Əsaslanan Autentifikasiya
+
+Tokenə əsaslanan autentifikasiya JSON Web Token (JWT) kimi tokenlərdən istifadə edərək istifadəçi sessiyalarını idarə edir. Bu üsul iki əsas mərhələdən ibarətdir:
+
+#### Tokenə Əsaslanan Autentifikasiya Prosesi
+
+1. **Autentifikasiya**:
+   - İstifadəçi giriş məlumatlarını təqdim edir, server onları təsdiqləyir.
+   - Uğurlu təsdiqdən sonra, server istifadəçi məlumatları və iddialarını ehtiva edən bir ID token (JWT) yaradır.
+   - Müştəri bu tokeni adətən local storage və ya cookie-lərdə saxlayır.
+
+2. **Avtorizasiya**:
+   - Müştəri tokeni növbəti sorğularda avtorizasiya başlığında göndərir.
+   - Server tokeni təsdiqləyir və tokenin iddialarına əsasən giriş hüququ verir.
+
+![Tokenə Əsaslanan Autentifikasiya Axını](https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CD0220EN-SkillsNetwork/Readings/images/tokenworkflow.png)
+
+Tokenlər aşağıdakılardan ibarətdir:
+- **Başlıq (Header)**: Tokenin növünü və hash algoritmini göstərir.
+- **Yük (Payload)**: İstifadəçi iddialarını ehtiva edir (məsələn, icazələr, rollar).
+- **İmza (Signature)**: Tokenin bütövlüyünü təmin edir.
+
+### Parolsuz Autentifikasiya
+
+Parolsuz autentifikasiya parollardan fərqli faktorlarla şəxsiyyəti təsdiq edir. Ümumi metodlar aşağıdakılardır:
+
+1. **Biometrik məlumatlar**: Barmaq izləri, üz tanıma və s.
+2. **Sehrli Linklər**: İstifadəçinin e-poçtuna göndərilən birdəfəlik istifadə olunan bağlantılar.
+3. **Birdəfəlik Şifrələr (OTP)**: Mobil cihazlara göndərilən kodlar.
+
+#### Parolsuz Autentifikasiya Necə İşləyir
+
+- **Açıq/Şəxsi Açar Cütləri**: İstifadəçinin cihazı qeydiyyat zamanı bir açar cütü yaradır.
+  - **Açıq Açar**: Tətbiq ilə saxlanılır.
+  - **Şəxsi Açar**: İstifadəçinin cihazında təhlükəsiz şəkildə saxlanılır.
+
+- **Autentifikasiya Prosesi**:
+  - Server açıq açarla şifrələnmiş bir giriş çağırışı göndərir.
+  - İstifadəçinin cihazı şəxsi açarla bu çağırışı deşifrə edir və istənilən əməliyyatı yerinə yetirir (məsələn, biometrik məlumatları təsdiqləmək).
+  - Cavab serverə geri göndərilir.
+
+![Parolsuz Autentifikasiya Axını](https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CD0220EN-SkillsNetwork/Readings/images/reg-verify.png)
+
+### Ümumi Nəticə
+
+- **Autentifikasiya** istifadəçinin şəxsiyyətini təsdiqləyir.
+- **Sessiyaya Əsaslanan Autentifikasiya** server tərəfindən idarə olunan sessiyalar və cookie-lərdən istifadə edərək istifadəçi vəziyyətini idarə edir.
+- **Tokenə Əsaslanan Autentifikasiya** JWT-lərdən istifadə edərək istifadəçi məlumatlarını asanlıqla saxlayır.
+- **Parolsuz Autentifikasiya** açıq/şəxsi açar cütləri və alternativ faktorlardan istifadə edərək təhlükəsizliyi və istifadəçi rahatlığını təmin edir.
+
+----------------------------------------------------------------
+
