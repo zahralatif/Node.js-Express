@@ -2213,3 +2213,215 @@ Express xüsusi bir qovluq strukturu tələb etməsə də, layihənizin böyüd�
 
 ------------------------------------------------------------------
 
+# Glossary (Lüğət)
+
+### Introduction to Server-Side JavaScript
+
+- **Anonymous Function**:  
+  **Anonim Funksiya** - Adı olmayan və tez-tez digər funksiyalara arqument kimi istifadə olunan funksiya.
+
+- **Application Server**:  
+  **Tətbiq Serveri** - Məlumatları emal edən və iş məntiqini yerinə yetirən, dinamik məzmun yaradan server.
+
+- **Asynchronous**:  
+  **Asinxron** - Digər proseslərdən müstəqil şəkildə işləyən proses.
+
+- **Callback Function**:  
+  **Geri Çağırma Funksiyası** - Digər funksiyaya parametr kimi ötürülən və hərəkəti tamamlamaq üçün çağırılan funksiya, adətən asinxron əməliyyatlarda istifadə olunur.
+
+- **Database Server**:  
+  **Verilənlər Bazası Serveri** - Verilənlər bazasını saxlamaq və xidmətlər göstərmək üçün həsr edilmiş server.
+
+- **Dependencies**:  
+  **Asılılıqlar** - Proqramda istifadə olunan xarici kitabxanalar və paketlər.
+
+- **Event-Driven**:  
+  **Hadisə-İdarəetmə** - Proqramın axınının istifadəçi girişləri kimi hadisələrlə təyin olunduğu proqramlaşdırma paradigması.
+
+- **Express.js**:  
+  **Express.js** - Node.js üzərində tətbiqlər yaratmaq üçün çevik veb framework.
+
+- **Framework**:  
+  **Framework** - Tətbiqləri yaratmaq üçün ümumi funksionallıq və struktur təmin edən əvvəlcədən yazılmış kodlar dəsti.
+
+- **HTTP Server**:  
+  **HTTP Server** - HTTP sorğularını və cavablarını idarə edən proqram.
+
+- **Load**:  
+  **Yüklənmə** - Eyni vaxtda istifadəçilər, tranzaksiyalar və müştərilər ilə serverlər arasında məlumat transferini ifadə edir.
+
+- **Module**:  
+  **Modul** - Müəyyən bir məqsədə xidmət edən əlaqəli JavaScript kodu ehtiva edən fayl.
+
+- **Multi-Threaded**:  
+  **Çoxişli** - Bir neçə tapşırığın eyni vaxtda icra edilməsi imkanı.
+
+- **Node.js**:  
+  **Node.js** - Google Chrome-un V8 mühərriki üzərində qurulmuş JavaScript runtime.
+
+- **Non-Blocking**:  
+  **Bloklamayan** - Bir əməliyyatın uğursuz olması digərlərini təsir etməyən və tapşırıqların bir-birini bloklamadığı bir sistem.
+
+- **Npm**:  
+  **npm** - Node.js paketlərini idarə etmək üçün bir vasitə.
+
+- **Package**:  
+  **Paket** - Bir və ya bir neçə modul ehtiva edən qovluq.
+
+- **Package.json**:  
+  **Package.json** - Layihə haqqında məlumatları, o cümlədən onun asılılıqlarını və skriptlərini ehtiva edən fayl.
+
+- **Payload**:  
+  **Yük** - Müştəri ilə server arasında ötürülən məlumatlar.
+
+- **Runtime Environment**:  
+  **Çalışma Mühiti** - Tətbiqin işə düşməsi üçün zəruri resursları təmin edən infrastruktur.
+
+- **Scalability**:  
+  **Ölçəklilik** - Performansı təsir etmədən artan və ya azalan yükləri idarə etmək qabiliyyəti.
+
+- **Server.js**:  
+  **Server.js** - Server qurmaq üçün istifadə olunan kodları ehtiva edən fayl.
+
+- **Single-Threaded**:  
+  **Tək-İşli** - Eyni anda yalnız bir əmri işləyən sistem.
+
+- **Web Server**:  
+  **Veb Server** - Müştəri sorğularına cavab verən, adətən HTTP istifadə edən server.
+
+- **Web Service**:  
+  **Veb Xidməti** - Veb serverlər və müştərilər arasında HTTP sorğuları vasitəsilə ünsiyyət quran API.
+
+
+### Asynchronous I/O with Callback Programming
+
+- **Async**:  
+  **Asinxron** - "Asynchronous" sözünün qısaldılması, eyni anda bir neçə əməliyyatı müstəqil şəkildə icra etməyə imkan verən proqramlaşdırma üsulu.
+
+- **Axios Package**:  
+  **Axios Paket** - HTTP sorğuları ətrafında vədələrlə işləyən kitabxana, vədə obyektini qaytarır.
+
+- **Callback Hell**:  
+  **Geri Çağırma Cəhənnəmi** - Bir neçə iç-içə geri çağırma funksiyaları ilə kodun oxunması və saxlanması çətinləşən vəziyyət.
+
+- **Inversion of Control**:  
+  **İdarəetmənin Tərsinə Çevrilməsi** - İcra axınının proqramçı deyil, bir framework və ya kitabxana tərəfindən idarə olunduğu proqramlaşdırma prinsipi.
+
+- **Promise**:  
+  **Vəd** - Asinxron əməliyyatın gələcəkdə tamamlanmasını və ya uğursuz olmasını təmsil edən obyekt; vəziyyətlər: gözləmə, yerinə yetirilmiş və ya rədd edilmiş.
+
+- **Pyramid of Doom**:  
+  **Doom Piramidası** - "Geri Çağırma Cəhənnəmi"nin digər adı; çox sayda iç-içə funksiyaların yaratdığı kod strukturu.
+
+### Express Web Application Framework
+
+- **Access Token**:  
+  **Giriş Tokeni** - İstifadəçi məlumatlarını, icazələrini və müddətini ehtiva edən token, resurslara giriş üçün istifadə olunur.
+
+- **API Endpoint**:  
+  **API Son Nöqtəsi** - API-nin bir tətbiqlə əlaqə qurduğu nöqtə.
+
+- **Application-Level Middleware**:  
+  **Tətbiq Səviyyəsində Middleware** - Bütün tətbiqə aid olan, sorğuları idarə edən və emal edən middleware.
+
+- **Authentication**:  
+  **Kimlik Doğrulama** - İstifadəçinin kimliyini təsdiqləmə prosesi.
+
+- **Authorization**:  
+  **İcazə Verilməsi** - İstifadəçinin bir resursa giriş hüququ olub-olmadığını müəyyənləşdirmək prosesi.
+
+- **Built-In Middleware**:  
+  **Daxili Middleware** - Express tərəfindən JSON emalı və görünüşlərin renderlənməsi kimi vəzifələri yerinə yetirən middleware.
+
+- **Controller**:  
+  **İdarəçi** - MVC arxitekturasında, istifadəçi daxilolmalarını emal edən, modellərlə əlaqə quran və görünüşləri qaytaran komponent.
+
+- **Error-Handling Middleware**:  
+  **Xəta İdarəetmə Middleware** - Tətbiqdaxili xətaları idarə etmək üçün xüsusi olaraq hazırlanmış middleware.
+
+- **Express.js**:  
+  **Express.js** - Node.js üçün veb tətbiq frameworkü, aşağı səviyyəli detalları abstraktlaşdırır.
+
+- **Framework**:  
+  **Framework** - Tətbiqin qurulması üçün struktur və öncədən təyin olunmuş komponentlər təqdim edən quruluş.
+
+- **HTTP Headers**:  
+  **HTTP Başlıqları** - HTTP sorğusu və ya cavabı ilə göndərilən metadata.
+
+- **HTTP Request**:  
+  **HTTP Sorğusu** - Müştəri tərəfindən serverə resurs tələb edən mesaj.
+
+- **HTTP Response**:  
+  **HTTP Cavabı** - Server tərəfindən müştəriyə HTTP sorğusuna cavab olaraq göndərilən mesaj.
+
+- **ID Token**:  
+  **ID Tokeni** - İstifadəçinin autentifikasiya olunduğunu sübut edən token.
+
+- **JSON Payload**:  
+  **JSON Yükü** - HTTP sorğusu və ya cavabının bodysində göndərilən JSON formatında məlumat.
+
+- **JWT (JSON Web Token)**:  
+  **JWT (JSON Web Token)** - Tərəflər arasında məlumatın təhlükəsiz ötürülməsi üçün istifadə olunan token formatı.
+
+- **Middleware**:  
+  **Middleware** - Sorğu və cavab obyektlərinə giriş imkanı olan və onları dəyişdirə bilən və ya sorğu-cavab dövrünü sona çatdıra bilən funksiyalar.
+
+- **Model**:  
+  **Model** - MVC arxitekturasında, məlumat və iş məntiqini idarə edən komponent.
+
+- **MVC (Model-View-Controller)**:  
+  **MVC (Model-Görünüş-İdarəçi)** - Tətbiqi model, görünüş və idarəçi komponentlərinə bölən arxitektura nümunəsi.
+
+- **Node Framework**:  
+  **Node Framework** - Node.js üzərində qurulmuş, struktur və ümumi funksionallıq təmin edən framework.
+
+- **npm**:  
+  **npm** - Node.js paketlərini idarə etmək üçün paket meneceri.
+
+- **Passwordless Authentication**:  
+  **Şifrəsiz Kimlik Doğrulama** - Şifrələr yerinə açar/cüt açar istifadə edən autentifikasiya metodu.
+
+- **Private Key**:  
+  **Şəxsi Açar** - Yalnız müəyyən bir istifadəçi tərəfindən bilinən, deşifrə üçün istifadə olunan kriptovalyuta açarı.
+
+- **Public Key**:  
+  **İctimai Açar** - Hər kəsin müəyyən bir istifadəçi üçün məlumatı şifrələmək üçün istifadə edə biləcəyi kriptovalyuta açarı.
+
+- **REST (Representational State Transfer)**:  
+  **REST** - Stateless API-lər dizayn etmək üçün prinsiplər toplusu.
+
+- **REST API**:  
+  **REST API** - REST prinsiplərinə uyğun olan API.
+
+- **Route**:  
+  **Yol** - Tətbiqin müəyyən bir HTTP sorğu metodu və URL-ə necə cavab verdiyini müəyyən edən.
+
+- **Router-Level Middleware**:  
+  **Router-Səviyyəsində Middleware** - Tam tətbiqə deyil, xüsusi bir routerə aid olan middleware.
+
+- **Session-based Authentication**:  
+  **Sessiya-Əsaslı Kimlik Doğrulama** - Sessiya ID-ləri istifadə edərək, cookies-də saxlanılan autentifikasiya metodu.
+
+- **Statelessness**:  
+  **Statelessness** - Hər HTTP sorğusunun müstəqil olduğu, serverdə müştəri vəziyyətinin saxlanılmadığı vəziyyət.
+
+- **Template Rendering**:  
+  **Şablon Renderlənməsi** - Məlumatları şablonlarla birləşdirərək dinamik məzmun yaratma.
+
+- **Token**:  
+  **Token** - Kimlik doğrulama və icazə üçün istifadə olunan məlumat parçası, başlıq, yük və imza ehtiva edir.
+
+- **Token-based Authentication**:  
+  **Token-Əsaslı Kimlik Doğrulama** - Resurslara giriş hüququ vermək üçün JWT kimi tokenlər istifadə edən autentifikasiya metodu.
+
+- **TypeScript**:  
+  **TypeScript** - JavaScript-in tip təhlükəsizliyi və digər xüsusiyyətlər əlavə edən üstsetidir, geniş miqyaslı tətbiqlər üçün faydalıdır.
+
+- **View**:  
+  **Görünüş** - MVC arxitekturasında, istifadəçiyə məlumatı təqdim edən komponent.
+
+- **xml2js**:  
+  **xml2js** - XML mətnlərini JavaScript obyektlərinə çevirmək üçün Node.js paketi.
+
+-----------------------------------------------------------------------
+
