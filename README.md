@@ -2425,3 +2425,305 @@ Express xüsusi bir qovluq strukturu tələb etməsə də, layihənizin böyüd�
 
 -----------------------------------------------------------------------
 
+# Cheat Sheet
+
+### Introduction to Server-Side JavaScript
+
+- **`http/createServer`**  
+  **Təsvir**: `http` paketi, serverə uzaqdan əlaqə qurmaq və ya müştəri sorğularını dinləyən bir server yaratmaq üçün istifadə olunur. `createServer` bir `requestListener` qəbul edir, bu funksiya `request` və `response` parametrləri ilə işləyir.  
+  **Kod Nümunəsi**:
+  ```javascript
+  const http = require('http');
+  const requestListener = function(req, res) {
+    res.writeHead(200);
+    res.end('Hello, World!');
+  }
+  const port = 8080;
+  const server = http.createServer(requestListener);
+  console.log('server listening on port: '+ port);
+  server.listen(port);
+  ```
+
+- **`new Date()`**  
+  **Təsvir**: Cari tarixi obyekt kimi qaytarır. Tarix obyektinə formatlamaq və ya zaman zonası dəyişdirmək üçün metodlar çağırıla bilər.  
+  **Kod Nümunəsi**:
+  ```javascript
+  module.exports.getDate = function getDate() {
+      let aestTime = new Date().toLocaleString("en-US", {timeZone: "Australia/Brisbane"});
+      return aestTime;
+  }
+  ```
+
+- **`import()`**  
+  **Təsvir**: Digər modul tərəfindən ixrac edilən modulları idxal etmək üçün istifadə olunur. Yenidən istifadə olunan kodu ehtiva edən fayl modul adlanır.  
+  **Kod Nümunəsi**:
+  ```javascript
+  // addTwoNos.mjs
+  function addTwo(num) {
+    return num + 4;
+  }
+  export { addTwo };
+
+  // app.js
+  import { addTwo } from './addTwoNos.mjs';
+  // Prints: 8
+  console.log(addTwo(4));
+  ```
+
+- **`require()`**  
+  **Təsvir**: Node.js-in daxili metodu olan `require()`, müxtəlif fayllardan xarici modulları daxil edir. JavaScript faylını oxuyur və icra edir, sonra ixrac obyektini qaytarır.  
+  **Kod Nümunəsi**:
+  ```javascript
+  module.exports = 'Hello Programmers';
+  let msg = require('./messages.js');
+  console.log(msg);
+  ```
+
+### Asynchronous I/O with Callback Programming
+
+- **`Async-await`**  
+  **Təsvir**: Promisləri yalnız asinxron funksiyalarda çağırarkən gözləyin.  
+  **Kod Nümunəsi**:
+  ```javascript
+  const axios = require('axios').default;
+  let url = "some remote url";
+  async function asyncCall() {
+    console.log('calling');
+    const result = await axios.get(url);
+    console.log(result.data);
+  }
+  asyncCall();
+  ```
+
+- **`Callback`**  
+  **Təsvir**: Parametr olaraq ötürülən metodlar, bu metodların daxilində çağırılır. Promislerle cavabları və ya xətaları emal etmək üçün istifadə olunur.  
+  **Kod Nümunəsi**:
+  ```javascript
+  // function(res) və function(err) anonim geri çağırma funksiyalarıdır
+  axios.get(url).then(function(res) {
+      console.log(res);
+  }).catch(function(err) {
+      console.log(err);
+  });
+  ```
+
+- **`Promise`**  
+  **Təsvir**: Asinxron əməliyyatın gələcəkdə tamamlanmasını və ya uğursuz olmasını təmsil edən obyekt. Kod bloklanmadan işləyir, vəd yerinə yetirilənə qədər və ya istisna atılana qədər.  
+  **Kod Nümunəsi**:
+  ```javascript
+  axios.get(url).then(
+  // nəsə et
+  ).catch(
+  // nəsə et
+  );
+  ```
+
+- **`Promise use case`**  
+  **Təsvir**: Vədlər zaman alan funksiyalar üçün, məsələn, uzaq URL-ə çıxış və ya I/O əməliyyatları üçün istifadə olunur.  
+  **Kod Nümunəsi**:
+  ```javascript
+  let prompt = require('prompt-sync')();
+  let fs = require('fs');
+  const methCall = new Promise((resolve, reject) => {
+      let filename = prompt('What is the name of the file?');
+      try {
+        const data = fs.readFileSync(filename, {encoding: 'utf8', flag: 'r'});
+        resolve(data);
+      } catch (err) {
+        reject(err);
+      }
+  });
+  console.log(methCall);
+  methCall.then(
+    (data) => console.log(data),
+    (err) => console.log("Error reading file")
+  );
+  ```
+
+- **`object.on()`**  
+  **Təsvir**: Bir hadisə baş verəndə framework tərəfindən çağırılan hadisə emalçısını müəyyən edir.  
+  **Kod Nümunəsi**:
+  ```javascript
+  http.request(options, function(response) {
+    let buffer = '';
+    response.on('data', function(chunk) {
+      buffer += chunk;
+    });
+    response.on('end', function() {
+      console.log(buffer);
+    });
+  }).end();
+  ```
+
+- **`Callback Hell/The Pyramid of Doom`**  
+  **Təsvir**: Bir-birinin altına yığılmış iç-içə geri çağırma funksiyaları, kodun oxunmasını və saxlanmasını çətinləşdirir.  
+  **Kod Nümunəsi**:
+  ```javascript
+  const makeCake = nextStep => {
+    buyIngredients(function(shoppingList) {
+      combineIngredients(bowl, mixer, function(ingredients) {
+        bakeCake(oven, pan, function(batter) {
+          decorate(icing, function(cake) {
+            nextStep(cake);
+          });
+        });
+      });
+    });
+  };
+  ```
+
+- **`Axios Request`**  
+  **Təsvir**: `axios` paketi HTTP sorğularını idarə edir və vəd obyektini qaytarır.  
+  **Kod Nümunəsi**:
+  ```javascript
+  const axios = require('axios').default;
+  const connectToURL = (url) => {
+    const req = axios.get(url);
+    console.log(req);
+    req.then(resp => {
+      console.log("Fulfilled");
+      console.log(resp.data);
+    })
+    .catch(err => {
+      console.log("Rejected");
+    });
+  }
+  connectToURL('valid-url');
+  connectToURL('invalid-url');
+  ```
+
+### Express Web Application Framework
+
+- **`Dependencies in package.json`**  
+  **Təsvir**: Express versiyası 4.0-dan 5.0-a qədər olan asılılıq aşağıdakı kimi bəyan edilir:  
+  **Kod Nümunəsi**:
+  ```json
+  "dependencies": {"express": "4.x"}
+  ```
+
+- **`new express()`**  
+  **Təsvir**: Express obyekti yaradır, bu obyekt server tətbiqi kimi fəaliyyət göstərir.  
+  **Kod Nümunəsi**:
+  ```javascript
+  const express = require("express");
+  const app = new express();
+  ```
+
+- **`express.listen()`**  
+  **Təsvir**: `listen` metodu Express obyektində serverin dinləyəcəyi port nömrəsi ilə çağırılır. Funksiya server dinləməyə başladıqda icra edilir.  
+  **Kod Nümunəsi**:
+  ```javascript
+  app.listen(3333, () => {
+    console.log("Listening at http://localhost:3333");
+  });
+  ```
+
+- **`express.get()`**  
+  **Təsvir**: Serverə GET sorğularını idarə edir. `get()` metodu iki parametr ilə həyata keçirilir; endpoint və sorğu və cavab emal edən funksiya.  
+  **Kod Nümunəsi**:
+
+  ```javascript
+  // /user/about/id endpointinə GET sorğuları idarə edir.
+  app.get("/user/about/:id", (req, res) => {
+    res.send("Response about user " + req.params.id);
+  });
+  ```
+
+- **`express.post()`**  
+  **Təsvir**: Serverə POST sorğularını idarə edir. `post()` metodu iki parametr ilə həyata keçirilir; endpoint və sorğu və cavab emal edən funksiya.  
+  **Kod Nümunəsi**:
+
+  ```javascript
+  // Eyni endpointə POST sorğularını idarə edir.
+  app.post("/user/about/:id", (req, res) => {
+    res.send("Response about user " + req.params.id);
+  });
+  ```
+
+- **`express.use()`**  
+  **Təsvir**: Middleware-i parametr olaraq qəbul edir. Middleware, `get()` və `post()` emalçılara çatmadan əvvəl eyni qaydada işləyən qapıçı kimi fəaliyyət göstərir.  
+  **Kod Nümunəsi**:
+  ```javascript
+  const express = require("express");
+  const app = new express();
+  function myLogger(req, res, next) {
+    req.timeReceived = Date();
+    next();
+  }
+  app.use(myLogger);
+  app.get("/", (req, res) => {
+    res.send("Request received at " + req.timeReceived + " is a success!");
+  });
+  ```
+
+- **`express.Router()`**  
+  **Təsvir**: Router səviyyəli middleware, `express.Router()` obyektinin bir nümunəsinə bağlanır. Müəyyən yol və xüsusi middleware üçün istifadə oluna bilər.  
+  **Kod Nümunəsi**:
+
+  ```javascript
+  const express = require("express");
+  const app = new express();
+  let userRouter = express.Router();
+  userRouter.use(function (req, res, next) {
+    console.log("User query time:", Date());
+    next();
+  });
+  userRouter.get("/:id", function (req, res) {
+    res.send("User " + req.params.id + " last successful login " + Date());
+  });
+  app.use("/user", userRouter);
+  app.listen(3333, () => {
+    console.log("Listening at http://localhost:3333");
+  });
+  ```
+
+- **`express.static()`**  
+  **Təsvir**: Server tərəfdən statik HTML səhifələri və şəkilləri xidmət etmək üçün istifadə olunan middleware.  
+  **Kod Nümunəsi**:
+  ```javascript
+  const express = require("express");
+  const app = new express();
+  app.use(express.static("cad220_staticfiles"));
+  app.listen(3333, () => {
+    console.log("Listening at http://localhost:3333");
+  });
+  ```
+
+- **`jsonwebtoken.sign()`**  
+  **Təsvir**: Yaradılmış JWT (JSON Web Token) əsasında giriş imzası üçün istifadə olunur.  
+  **Kod Nümunəsi**:
+  ```javascript
+  if (uname === "user" && pwd === "password") {
+    return res.json({
+      token: jsonwebtoken.sign({ user: "user" }, JWT_SECRET),
+    });
+  }
+  ```
+
+- **`jsonwebtoken.verify()`**  
+  **Təsvir**: JWT-ni token dəyəri və JWT sirri ilə təsdiqləyir.  
+  **Kod Nümunəsi**:
+  ```javascript
+  const verificationStatus = jsonwebtoken.verify(tokenValue, "aVeryVerySecretString");
+  ```
+
+- **`Project folder structure`**  
+  **Təsvir**: Express.js istifadə edərək API-lərin standart layihə strukturu.  
+  **Kod Nümunəsi**:
+  ```
+  test-project/
+     node_modules/
+     config/
+       db.js           // Verilənlər bazası əlaqəsi və konfiqurasiyası
+       credentials.js  // Tətbiqinizdə istifadə olunan şifrələr/API açarları
+     models/            // Mongoose sxemləri üçün
+        items.js
+        prices.js
+     routes/           // Müxtəlif entitilər üçün bütün yolların müxtəlif faylları
+        items.js
+        prices.js
+     app.js
+     routes.js         // Bütün yolları bu faylda tələb edir və sonra bu faylı app.js-də tələb edir
+     package.json
+  ```
+  
